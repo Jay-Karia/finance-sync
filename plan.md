@@ -1,4 +1,4 @@
-# Group Finance Tracker - Complete Planning Document
+# Group Finance Tracker - Planning Document
 
 ## Project Overview
 
@@ -6,7 +6,7 @@
 A web application where groups of people can track shared expenses, see who owes what, and settle debts efficiently without requiring user authentication or complex invitation systems.
 
 ### Core Concept
-- One person creates a group and adds all members (name + email)
+- One person creates a group and adds all members (name)
 - Add expenses and specify who paid and who should split
 - Real-time balance calculations show who owes money to whom
 - Simplified settlement suggestions minimize transaction complexity
@@ -21,7 +21,6 @@ A web application where groups of people can track shared expenses, see who owes
 3. Enters group name and optional description
 4. Adds group members:
    - Name (required)
-   - Email (optional)
    - Can add multiple members at once
    - Can add more members later
 5. Group is created and ready to use immediately
@@ -43,6 +42,7 @@ A web application where groups of people can track shared expenses, see who owes
    - Percentages
 6. Saves expense
 7. All balances update automatically
+8. Can share the image of the expense
 
 ### 3. Viewing Balances
 1. User opens the group dashboard
@@ -55,6 +55,7 @@ A web application where groups of people can track shared expenses, see who owes
    - Detailed expense history
    - Individual member spending
    - Category breakdowns
+4. Export the expense into image and share it.
 
 ### 4. Settling Payments
 1. User views "Settle Up" section
@@ -78,16 +79,14 @@ A web application where groups of people can track shared expenses, see who owes
 
 ### Group Management
 - **Create Group**: Simple form with name and description
-- **Add Members**: Name and email input, batch addition capability
-- **Member Management**: Edit names/emails, mark as inactive, remove members
+- **Add Members**: Name input, batch addition capability
+- **Member Management**: Edit names, remove members
 - **Group Settings**: Currency, default split behavior, categories
 
 ### Expense Tracking
-- **Quick Entry**: Streamlined form for common expense types
-- **Detailed Entry**: Full options for complex expenses
-- **Expense Categories**: Food, Transport, Utilities, Entertainment, Shopping, Other
-- **Receipt Storage**: Optional photo/file upload for receipts
-- **Recurring Expenses**: Set up monthly bills like rent or utilities
+- **Quick Entry**: Streamlined form for expenses
+- **Expense Categories**: Food, Transport, Utilities, Entertainment, Shopping, Other (optional)
+- **Receipt Storage**: Optional photo/file upload for receipts (not finalized)
 - **Expense History**: Searchable, filterable list of all group expenses
 
 ### Balance Calculations
@@ -98,11 +97,11 @@ A web application where groups of people can track shared expenses, see who owes
 
 ### Settlement System
 - **Optimal Settlements**: Calculate minimum transactions needed to settle all debts
-- **Payment Tracking**: Mark settlements as completed
+- **Payment Tracking**: Mark settlements as completed (can undo)
 - **Partial Payments**: Handle installment payments
 - **Settlement History**: Record of all payments made
 
-### Reporting & Analytics
+### Reporting & Analytics (not finalized)
 - **Group Summary**: Total spending, average per person, spending trends
 - **Category Breakdown**: See where money is being spent
 - **Time-based Reports**: Monthly, weekly, or custom date ranges
@@ -130,3 +129,30 @@ A web application where groups of people can track shared expenses, see who owes
 - **Circular Debt Resolution**: Handle A owes B, B owes C, C owes A scenarios
 - **Minimum Transactions**: Find the smallest number of payments to settle all debts
 - **Payment Verification**: Require confirmation from both parties for large settlements
+
+---
+
+## Site Info
+
+### Landing/Home Page (/)
+- **Header**: Catch header for the project
+- **Small Description**: Short description about the project
+- **Create Group**: Button which will redirect to /new
+- **GitHub**: Link to the repo
+- **All groups display**: Chips to display all groups (/:group_id)
+
+### Create Group Page (/new)
+- **Group Name**: Input field for group name
+- **Group Description**: Optional input field for group description
+- **Add Members**: Input field for member names (can add multiple)
+- **Create Button**: Button to create the group
+- **Redirect**: After creation, redirect to the group page (/:group_id)
+
+### Group Page (/:group_id)
+- **Group Header**: Display group name and description
+- **Add Expense Button**: Button to add a new expense
+- **Expenses List**: Display list of all expenses with details
+- **Balances Overview**: Show total spending, individual balances, and who owes whom
+- **Settle Up Section**: Display payment suggestions and settlement history
+- **Member Management**: Options to add/remove members
+- **Export Options**: Button to export data (image, CSV, etc.)
