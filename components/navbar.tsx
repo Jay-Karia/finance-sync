@@ -30,7 +30,7 @@ export default function Navbar() {
 
   return (
     <div className="relative w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 my-4">
-      <ResizableNavbar className="border border-gray-200 dark:border-gray-800 rounded-xl shadow-sm px-4">
+      <ResizableNavbar className="border border-gray-200 dark:border-gray-800 rounded-xl shadow-sm">
         {/* Desktop Navigation */}
         <NavBody>
           <Link href="/" className="z-10">
