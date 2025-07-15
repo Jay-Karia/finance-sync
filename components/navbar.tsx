@@ -15,11 +15,14 @@ import { GoHeartFill } from "react-icons/go";
 import { IoChevronDownOutline } from "react-icons/io5";
 import { NAVBAR_ITEMS } from "@/constants";
 import Logo from "./logo";
-import {ThemeToggle} from "./theme-toggle";
+import { ThemeToggle } from "./theme-toggle";
+import Link from "next/link";
 
 export default function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [openMobileDropdown, setOpenMobileDropdown] = useState<number | null>(null);
+  const [openMobileDropdown, setOpenMobileDropdown] = useState<number | null>(
+    null
+  );
 
   const toggleMobileDropdown = (idx: number) => {
     setOpenMobileDropdown(openMobileDropdown === idx ? null : idx);
@@ -30,15 +33,14 @@ export default function Navbar() {
       <ResizableNavbar>
         {/* Desktop Navigation */}
         <NavBody>
-          <Logo />
+          <Link href="/" className="z-10">
+            <Logo />
+          </Link>
           <NavItems items={NAVBAR_ITEMS} />
 
           <div className="flex items-center gap-2 ml-auto">
-
-            {/* <NavbarButton className="flex items-center"> */}
-              <ThemeToggle />
-            {/* </NavbarButton> */}
-            <NavbarButton className="flex items-center">
+            <ThemeToggle />
+            <NavbarButton className="flex items-center font-semibold text-sm">
               <GoHeartFill className="inline mr-1" />
               Donate
             </NavbarButton>
@@ -49,17 +51,20 @@ export default function Navbar() {
         <MobileNav>
           <MobileNavHeader>
             <Logo />
-            <MobileNavToggle
-              isOpen={isMobileMenuOpen}
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            />
+            <div className="flex flex-row justify-center gap-4 items-center">
+              <ThemeToggle />
+              <MobileNavToggle
+                isOpen={isMobileMenuOpen}
+                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              />
+            </div>
           </MobileNavHeader>
 
           <MobileNavMenu
             isOpen={isMobileMenuOpen}
             onClose={() => setIsMobileMenuOpen(false)}
           >
-            {NAVBAR_ITEMS.map((item, idx) => (
+            {NAVBAR_ITEMS.map((item, idx) =>
               item.dropdown ? (
                 <div key={`mobile-dropdown-${idx}`} className="w-full py-2">
                   <button
@@ -68,7 +73,9 @@ export default function Navbar() {
                   >
                     <span>{item.name}</span>
                     <IoChevronDownOutline
-                      className={`transition-transform ${openMobileDropdown === idx ? "rotate-180" : ""}`}
+                      className={`transition-transform ${
+                        openMobileDropdown === idx ? "rotate-180" : ""
+                      }`}
                     />
                   </button>
 
@@ -97,7 +104,7 @@ export default function Navbar() {
                   <span>{item.name}</span>
                 </a>
               )
-            ))}
+            )}
 
             <div className="flex w-full flex-col gap-4 mt-4">
               <NavbarButton>
