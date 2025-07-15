@@ -1,4 +1,8 @@
-export const NAVBAR_ITEMS = [
+export const NAVBAR_ITEMS: {
+  name: string;
+  link: string;
+  dropdown?: { name: string; link: string }[];
+}[] = [
   {
     name: "Home",
     link: "/",
@@ -10,10 +14,10 @@ export const NAVBAR_ITEMS = [
   {
     name: "My Groups",
     link: "",
-    dropdown: [
-      { name: "Roommates", link: "/groups/roommates" },
-      { name: "Trip to Japan", link: "/groups/trip-japan" },
-      { name: "Family Budget", link: "/groups/family" },
-    ],
+    // dropdown: [
+    //   { name: "Roommates", link: "/groups/roommates" },
+    //   { name: "Trip to Japan", link: "/groups/trip-japan" },
+    //   { name: "Family Budget", link: "/groups/family" },
+    // ],
   },
 ];

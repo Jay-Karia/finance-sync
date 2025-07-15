@@ -81,16 +81,29 @@ export default function Navbar() {
 
                   {openMobileDropdown === idx && (
                     <div className="pl-4 flex flex-col space-y-2 mt-2">
-                      {item.dropdown.map((dropdownItem, dropIdx) => (
-                        <a
-                          key={`mobile-dropdown-item-${dropIdx}`}
-                          href={dropdownItem.link}
-                          onClick={() => setIsMobileMenuOpen(false)}
-                          className="text-sm text-neutral-500 dark:text-neutral-400 hover:text-neutral-800 dark:hover:text-neutral-200 py-1.5"
-                        >
-                          {dropdownItem.name}
-                        </a>
-                      ))}
+                      {item.dropdown && item.dropdown.length > 0 ? (
+                        item.dropdown.map((dropdownItem, dropIdx) => (
+                          <a
+                            key={`mobile-dropdown-item-${dropIdx}`}
+                            href={dropdownItem.link}
+                            onClick={() => setIsMobileMenuOpen(false)}
+                            className="text-sm text-neutral-500 dark:text-neutral-400 hover:text-neutral-800 dark:hover:text-neutral-200 py-1.5"
+                          >
+                            {dropdownItem.name}
+                          </a>
+                        ))
+                      ) : (
+                        <div className="text-sm text-neutral-500 dark:text-neutral-400 py-1.5">
+                          <p>No groups found</p>
+                          <Link
+                            href="/groups/new"
+                            onClick={() => setIsMobileMenuOpen(false)}
+                            className="text-blue-500 hover:text-blue-600 mt-1 block"
+                          >
+                            Create your first group
+                          </Link>
+                        </div>
+                      )}
                     </div>
                   )}
                 </div>
