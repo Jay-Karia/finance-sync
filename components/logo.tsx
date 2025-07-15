@@ -10,7 +10,7 @@ export default function Logo() {
         height={24}
       />
       <span className="text-md font-semibold text-neutral-800 dark:text-neutral-100">
-        Finance Sync
+        App Name
       </span>
     </div>
   );
