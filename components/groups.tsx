@@ -1,7 +1,25 @@
+import { GroupInfo } from "@/types/group";
+import Link from "next/link";
 import { FaFolderPlus } from "react-icons/fa6";
 
 export default function Groups() {
-  const groups = [];
+  const groups: GroupInfo[] = [
+    {
+      id: 1,
+      name: "Roommates",
+      people: ["me", "I"],
+    },
+    {
+      id: 2,
+      name: "Trip to Japan",
+      people: ["me", "I"],
+    },
+    {
+      id: 3,
+      name: "Family Budget",
+      people: ["me", "I"],
+    },
+  ];
 
   return (
     <div className="w-full max-w-5xl mx-auto px-4 pb-12">
@@ -22,8 +40,20 @@ export default function Groups() {
             </div>
           </div>
         ) : (
-          // This would be your groups chips
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 w-full"></div>
+          <div className="flex flex-wrap gap-2 w-full justify-center">
+            {groups.map((group) => (
+              <Link href={`/groups/${group.id}`} key={group.name}>
+                <div className="inline-flex items-center px-4 py-2 bg-white dark:bg-gray-800 rounded-full shadow-sm hover:shadow-md hover:bg-gray-50 dark:hover:bg-gray-700 hover:scale-105 transition-all duration-200 cursor-pointer border border-gray-200 dark:border-gray-700">
+                  <span className="text-sm font-medium text-gray-800 dark:text-gray-200">
+                    {group.name}
+                  </span>
+                  <span className="ml-2 text-xs text-gray-500 dark:text-gray-400">
+                    {group.people.length} members
+                  </span>
+                </div>
+              </Link>
+            ))}
+          </div>
         )}
       </div>
     </div>
