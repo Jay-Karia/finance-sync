@@ -40,7 +40,7 @@ export default function Navbar() {
 
           <div className="flex items-center gap-2 ml-auto">
             <ThemeToggle />
-            <NavbarButton className="flex items-center font-semibold text-sm">
+            <NavbarButton className="bg-yellow-100 hover:bg-yellow-200 dark:bg-yellow-800/20 dark:hover:bg-yellow-600/20 text-yellow-800 dark:text-yellow-200 shadow-sm hover:shadow-md transition-all duration-200 border border-yellow-300 dark:border-yellow-700">
               <GoHeartFill className="inline mr-1" />
               Donate
             </NavbarButton>
@@ -120,7 +120,7 @@ export default function Navbar() {
             )}
 
             <div className="flex w-full flex-col gap-4 mt-4">
-              <NavbarButton>
+              <NavbarButton className="bg-yellow-100 hover:bg-yellow-200 dark:bg-yellow-800/20 dark:hover:bg-yellow-600/20 text-yellow-800 dark:text-yellow-200 shadow-sm hover:shadow-md transition-all duration-200 border border-yellow-300 dark:border-yellow-700">
                 <GoHeartFill className="inline mr-1" />
                 Donate
               </NavbarButton>

@@ -43,7 +43,7 @@ export default function Groups() {
           <div className="flex flex-wrap gap-2 w-full justify-center">
             {groups.map((group) => (
               <Link href={`/groups/${group.id}`} key={group.name}>
-                <div className="inline-flex items-center px-4 py-2 bg-white dark:bg-gray-800 rounded-full shadow-sm hover:shadow-md hover:bg-gray-50 dark:hover:bg-gray-700 hover:scale-105 transition-all duration-200 cursor-pointer border border-gray-200 dark:border-gray-700">
+                <div className="inline-flex items-center px-4 py-2 bg-white dark:bg-gray-800 rounded-full shadow-sm hover:shadow-md hover:bg-gray-50 dark:hover:bg-gray-700 transition-all duration-200 cursor-pointer border border-gray-200 dark:border-gray-700">
                   <span className="text-sm font-medium text-gray-800 dark:text-gray-200">
                     {group.name}
                   </span>
