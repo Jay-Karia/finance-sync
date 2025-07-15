@@ -12,9 +12,10 @@ import {
   ResizableNavbar,
 } from "./ui/resizable-navbar";
 import { GoHeartFill } from "react-icons/go";
-import { IoChevronDownOutline } from "react-icons/io5"; // Add this import
+import { IoChevronDownOutline } from "react-icons/io5";
 import { NAVBAR_ITEMS } from "@/constants";
 import Logo from "./logo";
+import {ThemeToggle} from "./theme-toggle";
 
 export default function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -33,6 +34,10 @@ export default function Navbar() {
           <NavItems items={NAVBAR_ITEMS} />
 
           <div className="flex items-center gap-2 ml-auto">
+
+            {/* <NavbarButton className="flex items-center"> */}
+              <ThemeToggle />
+            {/* </NavbarButton> */}
             <NavbarButton className="flex items-center">
               <GoHeartFill className="inline mr-1" />
               Donate
