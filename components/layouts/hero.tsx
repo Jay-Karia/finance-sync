@@ -1,7 +1,6 @@
 import { motion } from "motion/react";
 import Link from "next/link";
 import { FaGithub } from "react-icons/fa6";
-import { Button } from "../ui/moving-border";
 
 export default function Hero() {
   const HEADING = "Split Bills, Keep Friendships";
