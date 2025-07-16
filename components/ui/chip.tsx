@@ -50,33 +50,38 @@ export const MemberChipInput = ({
 
   return (
     <div
-      className="flex flex-wrap gap-2 p-2 border border-input rounded-md bg-background focus-within:ring-1 focus-within:ring-ring"
+      className="relative w-full border border-input rounded-md bg-background focus-within:ring-1 focus-within:ring-ring focus-within:border-gray-500 dark:bg-gray-800 dark:border-gray-700 dark:focus-within:ring-gray-500 transition-all duration-200"
       onClick={() => inputRef.current?.focus()}
     >
-      {value.map((member, index) => (
-        <div
-          key={index}
-          className="flex items-center bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-200 px-2 py-1 rounded-md"
-        >
-          <span className="mr-1 text-sm">{member}</span>
-          <button
-            type="button"
-            onClick={() => removeMember(member)}
-            className="text-yellow-700 hover:text-yellow-900 dark:text-yellow-300 dark:hover:text-yellow-100"
+      <div className="flex flex-wrap gap-2 p-2 min-h-[40px] w-full">
+        {value.map((member, index) => (
+          <div
+            key={index}
+            className="inline-flex items-center bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-200 px-2 py-1 rounded-md"
           >
-            <FaX size={14} />
-          </button>
-        </div>
-      ))}
-      <input
-        ref={inputRef}
-        type="text"
-        value={inputValue}
-        onChange={handleInputChange}
-        onKeyDown={handleKeyDown}
-        className="flex-grow outline-none border-none bg-transparent focus:ring-0 p-0.5 text-sm"
-        placeholder={value.length ? "" : placeholder}
-      />
+            <span className="mr-1 text-sm truncate max-w-[200px]">{member}</span>
+            <button
+              type="button"
+              onClick={(e) => {
+                e.stopPropagation();
+                removeMember(member);
+              }}
+              className="text-yellow-700 hover:text-yellow-900 dark:text-yellow-300 dark:hover:text-yellow-100 flex-shrink-0"
+            >
+              <FaX size={12} />
+            </button>
+          </div>
+        ))}
+        <input
+          ref={inputRef}
+          type="text"
+          value={inputValue}
+          onChange={handleInputChange}
+          onKeyDown={handleKeyDown}
+          className="inline-flex flex-1 min-w-[120px] outline-none border-none bg-transparent focus:ring-0 p-0.5 text-sm"
+          placeholder={value.length ? "" : placeholder}
+        />
+      </div>
     </div>
   );
 };

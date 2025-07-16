@@ -5,4 +5,5 @@ export const newGroupSchema = z.object({
   description: z.string().optional(),
   members: z.array(z.string()),
   date: z.string().optional(),
+  createdBy: z.string().min(1, "Created by is required"),
 })
