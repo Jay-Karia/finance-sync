@@ -16,7 +16,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { MemberChipInput } from "@/components/ui/chip";
-import { Users } from "lucide-react";
+import {FaPlus} from "react-icons/fa6";
 
 export default function NewGroupPage() {
   const form = useForm<z.infer<typeof newGroupSchema>>({
@@ -37,16 +37,17 @@ export default function NewGroupPage() {
   return (
     <div className="flex items-center justify-center px-4 py-10 w-full">
       <div className="w-full max-w-2xl bg-white dark:bg-gray-800/90 border border-gray-200 dark:border-gray-700 rounded-xl shadow-lg overflow-hidden">
-        {/* Enhanced Header */}
-        <div className="bg-gradient-to-r from-yellow-50 to-yellow-100 dark:from-yellow-900/20 dark:to-yellow-800/20 p-6 border-b border-yellow-200 dark:border-yellow-800/30">
-          <div className="flex items-center">
-            <div className="bg-yellow-200 dark:bg-yellow-700/30 p-3 rounded-lg mr-4">
-              <Users className="h-6 w-6 text-yellow-700 dark:text-yellow-300" />
-            </div>
-            <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">
-              Create New Group
-            </h1>
+        {/* Header */}
+        <div className="p-6 bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700 text-center">
+          <div className="mx-auto mb-2 h-10 w-10 rounded-full bg-yellow-100 dark:bg-yellow-800 flex items-center justify-center">
+           <FaPlus className="w-4 h-4 text-yellow-600 dark:text-yellow-300" />
           </div>
+          <h1 className="text-2xl font-semibold text-gray-900 dark:text-gray-100">
+            Create a New Group
+          </h1>
+          <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+            Split bills & share expenses seamlessly
+          </p>
         </div>
 
         {/* Form */}
