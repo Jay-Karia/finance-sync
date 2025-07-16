@@ -16,7 +16,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { MemberChipInput } from "@/components/ui/chip";
-import {FaPlus} from "react-icons/fa6";
+import { FaPlus } from "react-icons/fa6";
 
 export default function NewGroupPage() {
   const form = useForm<z.infer<typeof newGroupSchema>>({
@@ -39,8 +39,8 @@ export default function NewGroupPage() {
       <div className="w-full max-w-2xl bg-white dark:bg-gray-800/90 border border-gray-200 dark:border-gray-700 rounded-xl shadow-lg overflow-hidden">
         {/* Header */}
         <div className="p-6 bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700 text-center">
-          <div className="mx-auto mb-2 h-10 w-10 rounded-full bg-yellow-100 dark:bg-yellow-800 flex items-center justify-center">
-           <FaPlus className="w-4 h-4 text-yellow-600 dark:text-yellow-300" />
+          <div className="mx-auto mb-2 h-10 w-10 rounded-full bg-yellow-100 dark:bg-yellow-600 flex items-center justify-center">
+            <FaPlus className="w-4 h-4 text-yellow-600 dark:text-yellow-300" />
           </div>
           <h1 className="text-2xl font-semibold text-gray-900 dark:text-gray-100">
             Create a New Group
@@ -51,7 +51,7 @@ export default function NewGroupPage() {
         </div>
 
         {/* Form */}
-        <div className="p-6 md:p-8 w-full bg-white dark:bg-gray-800">
+        <div className="p-6 md:p-8 w-full bg-white dark:bg-gray-800/50">
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
               {/* Group Name */}
@@ -67,7 +67,7 @@ export default function NewGroupPage() {
                       <Input
                         placeholder="Road Trip"
                         {...field}
-                        className="focus-visible:ring-yellow-500 border-gray-300 dark:border-gray-600"
+                        className="focus-visible:ring-gray-300 border-gray-300 dark:border-gray-600"
                       />
                     </FormControl>
                     <FormMessage />
@@ -88,7 +88,7 @@ export default function NewGroupPage() {
                       <Input
                         placeholder="A fun road trip with friends"
                         {...field}
-                        className="focus-visible:ring-yellow-500 border-gray-300 dark:border-gray-600"
+                        className="focus-visible:ring-gray-300 border-gray-300 dark:border-gray-600"
                       />
                     </FormControl>
                     <FormMessage />
@@ -109,7 +109,7 @@ export default function NewGroupPage() {
                       <Input
                         placeholder="Your Name"
                         {...field}
-                        className="focus-visible:ring-yellow-500 border-gray-300 dark:border-gray-600"
+                        className="focus-visible:ring-gray-300 border-gray-300 dark:border-gray-600"
                       />
                     </FormControl>
                     <FormMessage />
@@ -155,7 +155,7 @@ export default function NewGroupPage() {
                       <Input
                         type="date"
                         {...field}
-                        className="focus-visible:ring-yellow-500 border-gray-300 dark:border-gray-600"
+                        className="focus-visible:ring-gray-300 border-gray-300 dark:border-gray-600"
                       />
                     </FormControl>
                     <FormMessage />
