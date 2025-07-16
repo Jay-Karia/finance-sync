@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   MobileNav,
   MobileNavHeader,
@@ -13,11 +13,15 @@ import {
 } from "./ui/resizable-navbar";
 import { GoHeartFill } from "react-icons/go";
 import { IoChevronDownOutline } from "react-icons/io5";
-import { NAVBAR_ITEMS } from "@/constants";
 import Logo from "./logo";
 import Link from "next/link";
+import { NAVBAR_ITEMS } from "@/constants";
+import { useAtomValue } from "jotai";
+import { groupsAtom } from "@/atoms";
 
 export default function Navbar() {
+  const groups = useAtomValue(groupsAtom);
+
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [openMobileDropdown, setOpenMobileDropdown] = useState<number | null>(
     null
@@ -26,6 +30,20 @@ export default function Navbar() {
   const toggleMobileDropdown = (idx: number) => {
     setOpenMobileDropdown(openMobileDropdown === idx ? null : idx);
   };
+
+  useEffect(() => {
+    // Update the NAVBAR_ITEMS with groups data
+    NAVBAR_ITEMS.forEach((item) => {
+      if (item.name === "Groups" && groups.length > 0) {
+        item.dropdown = groups.map((group) => ({
+          name: group.name,
+          link: `/groups/${group.id}`,
+        }));
+      } else if (item.name === "Groups") {
+        item.dropdown = [];
+      }
+    });
+  }, [groups]);
 
   return (
     <div className="relative w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 my-4">

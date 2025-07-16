@@ -12,7 +12,8 @@ export const NAVBAR_ITEMS: {
     link: "new",
   },
   {
-    name: "My Groups",
-    link: "",
-  },
+    name: "Groups",
+    link: "/",
+    dropdown: [],
+  }
 ];
