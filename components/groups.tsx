@@ -23,8 +23,8 @@ export default function Groups() {
             {groups.length === 0 ? (
               <div className="flex flex-col items-center justify-center w-full p-12 border-2 border-dashed border-gray-200 dark:border-gray-700 rounded-xl bg-gray-50 dark:bg-gray-900/30">
                 <div className="flex flex-col items-center text-center max-w-md">
-                  <div className="w-16 h-16 mb-4 rounded-full bg-blue-50 dark:bg-blue-900/20 flex items-center justify-center">
-                    <FaFolderPlus className="w-6 h-6 text-blue-500" />
+                  <div className="w-16 h-16 mb-4 rounded-full bg-yellow-200/50 dark:bg-yellow-900/20 flex items-center justify-center">
+                    <FaFolderPlus className="w-6 h-6 text-yellow-600" />
                   </div>
                   <h3 className="text-xl font-semibold text-gray-700 dark:text-gray-300 mb-2">
                     No groups yet
