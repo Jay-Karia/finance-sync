@@ -17,8 +17,13 @@ import {
 import { Input } from "@/components/ui/input";
 import { MemberChipInput } from "@/components/ui/chip";
 import { FaPlus } from "react-icons/fa6";
+import { useAtom } from "jotai/react";
+import { groupsAtom } from "@/atoms";
+import { generateBase64Id } from "@/lib/utils";
 
 export default function NewGroupPage() {
+  const [groups, setGroups] = useAtom(groupsAtom);
+
   const form = useForm<z.infer<typeof newGroupSchema>>({
     resolver: zodResolver(newGroupSchema),
     defaultValues: {
@@ -31,7 +36,18 @@ export default function NewGroupPage() {
   });
 
   function onSubmit(values: z.infer<typeof newGroupSchema>) {
-    console.log(values);
+    try {
+      const groupsCopy = [...groups];
+      const newGroup = {
+        ...values,
+        id: generateBase64Id(),
+      };
+      groupsCopy.push(newGroup);
+      setGroups(groupsCopy);
+      form.reset();
+    } catch (error) {
+      console.error("Failed to create group:", error);
+    }
   }
 
   return (

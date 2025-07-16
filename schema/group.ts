@@ -7,3 +7,7 @@ export const newGroupSchema = z.object({
   date: z.string().optional(),
   createdBy: z.string().min(1, "Created by is required"),
 })
+
+export const groupSchema = newGroupSchema.extend({
+  id: z.string()
+})

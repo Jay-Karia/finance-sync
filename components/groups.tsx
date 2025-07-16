@@ -1,25 +1,11 @@
-import { GroupInfo } from "@/types/group";
+import { groupsAtom } from "@/atoms";
+import { trimGroupName } from "@/lib/utils";
+import { useAtomValue } from "jotai/react";
 import Link from "next/link";
 import { FaFolderPlus } from "react-icons/fa6";
 
 export default function Groups() {
-  const groups: GroupInfo[] = [
-    {
-      id: 1,
-      name: "Roommates",
-      people: ["me", "I"],
-    },
-    {
-      id: 2,
-      name: "Trip to Japan",
-      people: ["me", "I"],
-    },
-    {
-      id: 3,
-      name: "Family Budget",
-      people: ["me", "I"],
-    },
-  ];
+  const groups = useAtomValue(groupsAtom);
 
   return (
     <div className="w-full max-w-5xl mx-auto px-4 pb-12">
@@ -45,10 +31,10 @@ export default function Groups() {
               <Link href={`/groups/${group.id}`} key={group.name}>
                 <div className="inline-flex items-center px-4 py-2 bg-white dark:bg-gray-800 rounded-full shadow-sm hover:shadow-md hover:bg-gray-50 dark:hover:bg-gray-700 transition-all duration-200 cursor-pointer border border-gray-200 dark:border-gray-700">
                   <span className="text-sm font-medium text-gray-800 dark:text-gray-200">
-                    {group.name}
+                    {trimGroupName(group.name)}
                   </span>
                   <span className="ml-2 text-xs text-gray-500 dark:text-gray-400">
-                    {group.people.length} members
+                    {group.members.length} members
                   </span>
                 </div>
               </Link>

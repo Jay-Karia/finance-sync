@@ -14,10 +14,5 @@ export const NAVBAR_ITEMS: {
   {
     name: "My Groups",
     link: "",
-    dropdown: [
-      { name: "Roommates", link: "/groups/1" },
-      { name: "Trip to Japan", link: "/groups/2" },
-      { name: "Family Budget", link: "/groups/3" },
-    ],
   },
 ];

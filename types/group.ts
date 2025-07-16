@@ -1,6 +1,4 @@
-export type GroupInfo = {
-  id: number;
-  name: string;
-  description?: string;
-  people: string[];
-}
+import z from "zod";
+import { groupSchema } from "@/schema/group";
+
+export type Group = z.infer<typeof groupSchema>;
