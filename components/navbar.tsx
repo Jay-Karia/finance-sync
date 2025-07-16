@@ -15,7 +15,6 @@ import { GoHeartFill } from "react-icons/go";
 import { IoChevronDownOutline } from "react-icons/io5";
 import { NAVBAR_ITEMS } from "@/constants";
 import Logo from "./logo";
-import { ThemeToggle } from "./theme-toggle";
 import Link from "next/link";
 
 export default function Navbar() {
@@ -39,10 +38,9 @@ export default function Navbar() {
           <NavItems items={NAVBAR_ITEMS} />
 
           <div className="flex items-center gap-2 ml-auto">
-            <ThemeToggle />
             <NavbarButton className="bg-yellow-100 hover:bg-yellow-200 dark:bg-yellow-800/20 dark:hover:bg-yellow-600/20 text-yellow-800 dark:text-yellow-200 shadow-sm hover:shadow-md transition-all duration-200 border border-yellow-300 dark:border-yellow-700">
               <GoHeartFill className="inline mr-1" />
-              Donate
+              Sponsor
             </NavbarButton>
           </div>
         </NavBody>
@@ -52,7 +50,6 @@ export default function Navbar() {
           <MobileNavHeader>
             <Logo />
             <div className="flex flex-row justify-center gap-4 items-center">
-              <ThemeToggle />
               <MobileNavToggle
                 isOpen={isMobileMenuOpen}
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
@@ -122,7 +119,7 @@ export default function Navbar() {
             <div className="flex w-full flex-col gap-4 mt-4">
               <NavbarButton className="bg-yellow-100 hover:bg-yellow-200 dark:bg-yellow-800/20 dark:hover:bg-yellow-600/20 text-yellow-800 dark:text-yellow-200 shadow-sm hover:shadow-md transition-all duration-200 border border-yellow-300 dark:border-yellow-700">
                 <GoHeartFill className="inline mr-1" />
-                Donate
+                Sponsor
               </NavbarButton>
             </div>
           </MobileNavMenu>
