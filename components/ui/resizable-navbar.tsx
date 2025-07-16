@@ -1,10 +1,9 @@
 "use client";
 import { cn } from "@/lib/utils";
 import { IconMenu2, IconX } from "@tabler/icons-react";
-import {
-  motion,
-  AnimatePresence,
-} from "motion/react";
+import { motion, AnimatePresence } from "motion/react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 import React, { useState } from "react";
 
@@ -71,6 +70,7 @@ export const NavBody = ({ children, className }: NavBodyProps) => {
 export const NavItems = ({ items, className, onItemClick }: NavItemsProps) => {
   const [hovered, setHovered] = useState<number | null>(null);
   const [openDropdown, setOpenDropdown] = useState<number | null>(null);
+  const pathname = usePathname();
 
   return (
     <motion.div
@@ -82,6 +82,7 @@ export const NavItems = ({ items, className, onItemClick }: NavItemsProps) => {
     >
       {items.map((item, idx) => (
         <div className="relative" key={`nav-item-${idx}`}>
+          {/* {item.link} */}
           {item.dropdown ? (
             // Item with dropdown
             <button
@@ -89,9 +90,15 @@ export const NavItems = ({ items, className, onItemClick }: NavItemsProps) => {
               onClick={(e) => {
                 e.stopPropagation();
                 setOpenDropdown(openDropdown === idx ? null : idx);
-                if (onItemClick) onItemClick();
+                onItemClick?.();
               }}
-              className="relative px-4 py-2 text-neutral-600 dark:text-neutral-300 flex items-center"
+              className={cn(
+                "relative px-4 py-2 flex items-center text-neutral-600 dark:text-neutral-300",
+                {
+                  "bg-gray-100 text-neutral-900 rounded-full dark:bg-neutral-700 dark:text-neutral-200":
+                    pathname.includes("groups"),
+                }
+              )}
             >
               {hovered === idx && (
                 <motion.div
@@ -123,7 +130,7 @@ export const NavItems = ({ items, className, onItemClick }: NavItemsProps) => {
                 >
                   <div className="py-1">
                     {item.dropdown.map((dropdownItem, dropIdx) => (
-                      <a
+                      <Link
                         key={`dropdown-item-${dropIdx}`}
                         href={dropdownItem.link}
                         className="block px-4 py-2 text-sm text-neutral-600 dark:text-neutral-300 hover:bg-gray-100 dark:hover:bg-neutral-800"
@@ -133,7 +140,7 @@ export const NavItems = ({ items, className, onItemClick }: NavItemsProps) => {
                         }}
                       >
                         {dropdownItem.name}
-                      </a>
+                      </Link>
                     ))}
                   </div>
                 </div>
@@ -141,20 +148,28 @@ export const NavItems = ({ items, className, onItemClick }: NavItemsProps) => {
             </button>
           ) : (
             // Standard nav item without dropdown
-            <a
-              onMouseEnter={() => setHovered(idx)}
-              onClick={onItemClick}
-              className="relative px-4 py-2 text-neutral-600 dark:text-neutral-300"
-              href={item.link}
-            >
-              {hovered === idx && (
-                <motion.div
-                  layoutId="hovered"
-                  className="absolute inset-0 h-full w-full rounded-full bg-gray-100 dark:bg-neutral-800"
-                />
-              )}
-              <span className="relative z-20">{item.name}</span>
-            </a>
+            <>
+              <Link
+                href={item.link}
+                onMouseEnter={() => setHovered(idx)}
+                onClick={onItemClick}
+                className={cn(
+                  "relative px-4 py-2 text-neutral-600 dark:text-neutral-300",
+                  {
+                    "bg-gray-100 text-neutral-900 rounded-full dark:bg-neutral-700 dark:text-neutral-200":
+                      pathname === item.link,
+                  }
+                )}
+              >
+                {hovered === idx && (
+                  <motion.div
+                    layoutId="hovered"
+                    className="absolute inset-0 h-full w-full rounded-full bg-gray-100 dark:bg-neutral-800"
+                  />
+                )}
+                <span className="relative z-20">{item.name}</span>
+              </Link>
+            </>
           )}
         </div>
       ))}

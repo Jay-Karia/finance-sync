@@ -4,7 +4,7 @@ export default function GroupLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="w-full max-w-7xl px-4 pb-12 flex justify-center items-center flex-col border">
+    <div className="max-w-7xl border flex items-center justify-center mx-auto my-4 p-4 bg-white dark:bg-gray-800 rounded-lg shadow-md">
       {children}
     </div>
   );

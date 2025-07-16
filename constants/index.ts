@@ -9,7 +9,7 @@ export const NAVBAR_ITEMS: {
   },
   {
     name: "New Group",
-    link: "new",
+    link: "/new",
   },
   {
     name: "Groups",
