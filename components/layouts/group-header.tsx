@@ -7,6 +7,7 @@ import { toast } from "sonner";
 import { ERROR_TOAST_STYLE, SUCCESS_TOAST_STYLE } from "@/constants";
 import EditGroup from "../edit-group";
 import DeleteGroup from "../delete-group";
+import Link from "next/link";
 
 interface GroupHeaderProps {
   group: Group;
@@ -83,8 +84,12 @@ export default function GroupHeader({ group }: GroupHeaderProps) {
               on <time dateTime={group.date}>{group.date}</time>
             </p>
           </div>
-          <Button onClick={() => {}} className="mt-4 sm:mt-0 cursor-pointer">
-            Add Expense
+          <Button
+            onClick={() => {}}
+            className="mt-4 sm:mt-0 cursor-pointer"
+            asChild
+          >
+            <Link href={`/add-expense/${group.id}`}>Add Expense</Link>
           </Button>
         </div>
 

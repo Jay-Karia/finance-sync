@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Finance Sync | New Group",
+  title: "New Group - Finance Sync",
 };
 
 export default function NewGroupLayout({
