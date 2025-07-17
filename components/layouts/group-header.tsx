@@ -4,6 +4,7 @@ import { FaX } from "react-icons/fa6";
 import { useSetAtom } from "jotai";
 import { groupsAtom } from "@/atoms";
 import { toast } from "sonner";
+import { ERROR_TOAST_STYLE, SUCCESS_TOAST_STYLE } from "@/constants";
 
 interface GroupHeaderProps {
   group: Group;
@@ -23,40 +24,20 @@ export default function GroupHeader({ group }: GroupHeaderProps) {
         )
       );
 
-      toast.success("Member removed successfully", {
-        style: {
-          background: "#d4edda",
-          color: "#155724",
-        },
-      });
+      toast.success("Member removed successfully", SUCCESS_TOAST_STYLE);
     } catch (error) {
       console.error("Error removing member:", error);
-      toast.error("Failed to remove member", {
-        style: {
-          background: "#f8d7da",
-          color: "#721c24",
-        },
-      });
+      toast.error("Failed to remove member", ERROR_TOAST_STYLE);
     }
   }
 
   function handleAddMember(member: string) {
     if (!member.trim()) {
-      toast.error("Member name cannot be empty", {
-        style: {
-          background: "#f8d7da",
-          color: "#721c24",
-        },
-      });
+      toast.error("Member name cannot be empty", ERROR_TOAST_STYLE);
       return;
     }
     if (group.members.includes(member)) {
-      toast.error("Member already exists in the group", {
-        style: {
-          background: "#f8d7da",
-          color: "#721c24",
-        },
-      });
+      toast.error("Member already exists in the group", ERROR_TOAST_STYLE);
       return;
     }
     group.members.push(member.trim());
@@ -65,12 +46,7 @@ export default function GroupHeader({ group }: GroupHeaderProps) {
         g.id === group.id ? { ...g, members: [...group.members] } : g
       )
     );
-    toast.success("Member added successfully", {
-      style: {
-        background: "#d4edda",
-        color: "#155724",
-      },
-    });
+    toast.success("Member added successfully", SUCCESS_TOAST_STYLE);
   }
 
   function handleKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {

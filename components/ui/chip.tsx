@@ -1,6 +1,7 @@
+import { ERROR_TOAST_STYLE, SUCCESS_TOAST_STYLE } from "@/constants";
 import { useRef, useState } from "react";
 import { FaX } from "react-icons/fa6";
-import {toast} from "sonner";
+import { toast } from "sonner";
 
 export const MemberChipInput = ({
   value,
@@ -22,22 +23,12 @@ export const MemberChipInput = ({
 
     // Show a toast if the member already exists
     if (value.includes(trimmedMember)) {
-      toast.error("Member already exists in the list", {
-        style: {
-          background: "#f8d7da",
-          color: "#721c24",
-        },
-      });
+      toast.error("Member already exists in the list", ERROR_TOAST_STYLE);
     }
 
     // Show a success toast when a member is added
     if (!value.includes(trimmedMember)) {
-      toast.success("Member added successfully", {
-        style: {
-          background: "#d4edda",
-          color: "#155724",
-        },
-      });
+      toast.success("Member added successfully", SUCCESS_TOAST_STYLE);
     }
   };
 
@@ -80,7 +71,9 @@ export const MemberChipInput = ({
             key={index}
             className="inline-flex items-center bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-200 px-2 py-1 rounded-md"
           >
-            <span className="mr-1 text-sm truncate max-w-[200px]">{member}</span>
+            <span className="mr-1 text-sm truncate max-w-[200px]">
+              {member}
+            </span>
             <button
               type="button"
               onClick={(e) => {
