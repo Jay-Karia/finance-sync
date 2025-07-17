@@ -1,5 +1,6 @@
 import { useRef, useState } from "react";
 import { FaX } from "react-icons/fa6";
+import {toast} from "sonner";
 
 export const MemberChipInput = ({
   value,
@@ -17,6 +18,26 @@ export const MemberChipInput = ({
     const trimmedMember = member.trim();
     if (trimmedMember && !value.includes(trimmedMember)) {
       onChange([...value, trimmedMember]);
+    }
+
+    // Show a toast if the member already exists
+    if (value.includes(trimmedMember)) {
+      toast.error("Member already exists in the list", {
+        style: {
+          background: "#f8d7da",
+          color: "#721c24",
+        },
+      });
+    }
+
+    // Show a success toast when a member is added
+    if (!value.includes(trimmedMember)) {
+      toast.success("Member added successfully", {
+        style: {
+          background: "#d4edda",
+          color: "#155724",
+        },
+      });
     }
   };
 

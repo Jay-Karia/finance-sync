@@ -23,20 +23,40 @@ export default function GroupHeader({ group }: GroupHeaderProps) {
         )
       );
 
-      toast.success("Member removed successfully");
+      toast.success("Member removed successfully", {
+        style: {
+          background: "#d4edda",
+          color: "#155724",
+        },
+      });
     } catch (error) {
       console.error("Error removing member:", error);
-      toast.error("Failed to remove member");
+      toast.error("Failed to remove member", {
+        style: {
+          background: "#f8d7da",
+          color: "#721c24",
+        },
+      });
     }
   }
 
   function handleAddMember(member: string) {
     if (!member.trim()) {
-      toast.error("Member name cannot be empty");
+      toast.error("Member name cannot be empty", {
+        style: {
+          background: "#f8d7da",
+          color: "#721c24",
+        },
+      });
       return;
     }
     if (group.members.includes(member)) {
-      toast.error("Member already exists in the group");
+      toast.error("Member already exists in the group", {
+        style: {
+          background: "#f8d7da",
+          color: "#721c24",
+        },
+      });
       return;
     }
     group.members.push(member.trim());
@@ -45,7 +65,12 @@ export default function GroupHeader({ group }: GroupHeaderProps) {
         g.id === group.id ? { ...g, members: [...group.members] } : g
       )
     );
-    toast.success("Member added successfully");
+    toast.success("Member added successfully", {
+      style: {
+        background: "#d4edda",
+        color: "#155724",
+      },
+    });
   }
 
   function handleKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {
