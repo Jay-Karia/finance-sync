@@ -5,6 +5,7 @@ import { useSetAtom } from "jotai";
 import { groupsAtom } from "@/atoms";
 import { toast } from "sonner";
 import { ERROR_TOAST_STYLE, SUCCESS_TOAST_STYLE } from "@/constants";
+import EditName from "../edit-name";
 
 interface GroupHeaderProps {
   group: Group;
@@ -64,9 +65,11 @@ export default function GroupHeader({ group }: GroupHeaderProps) {
       <div className="bg-white dark:bg-gray-800 rounded-lg p-6">
         <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-50">
+            <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-50 flex">
               {group.name}
+              <EditName groupName={group.name} groupId={group.id} />
             </h1>
+
             <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">
               Created by{" "}
               <span className="font-medium text-gray-800 dark:text-gray-200">

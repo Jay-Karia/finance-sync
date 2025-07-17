@@ -7,6 +7,7 @@ import { Group } from "@/types/group";
 import Transactions from "@/components/transactions";
 import Summary from "@/components/summary";
 import GroupHeader from "@/components/layouts/group-header";
+import Settle from "@/components/settle";
 
 export default function GroupPage({ params }: { params: { id: string } }) {
   const { id } = params;
@@ -44,13 +45,15 @@ export default function GroupPage({ params }: { params: { id: string } }) {
         {/* Group Header */}
         <GroupHeader group={group} />
 
-        {/* Summary & Transactions */}
         <div className="mt-8 grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Summary Card */}
           <Summary />
 
           {/* Transactions Card */}
           <Transactions />
+
+          {/* Settle */}
+          <Settle />
         </div>
       </div>
     </div>
