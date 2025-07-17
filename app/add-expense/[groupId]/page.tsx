@@ -4,6 +4,8 @@ import { groupsAtom } from "@/atoms";
 import { Group } from "@/types/group";
 import { useAtomValue } from "jotai";
 import { useState, useEffect } from "react";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import Expense from "@/components/layouts/expense";
 
 export default function AddExpensePage({
   params,
@@ -39,5 +41,20 @@ export default function AddExpensePage({
     );
   }
 
-  return <div>{JSON.stringify(group)}</div>;
+  return (
+    <div className="w-full flex justify-center items-center">
+      <Tabs defaultValue="expense" className="w-full">
+        <TabsList className="w-full">
+          <TabsTrigger value="expense">Expense</TabsTrigger>
+          <TabsTrigger value="given">Money Given</TabsTrigger>
+          <TabsTrigger value="received">Money Received</TabsTrigger>
+        </TabsList>
+        <TabsContent value="expense">
+          <Expense group={group} />
+        </TabsContent>
+        <TabsContent value="given">Change your password here.</TabsContent>
+        <TabsContent value="received">Change your password here.</TabsContent>
+      </Tabs>
+    </div>
+  );
 }

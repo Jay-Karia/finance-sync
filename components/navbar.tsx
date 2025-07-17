@@ -39,8 +39,6 @@ export default function Navbar() {
           name: group.name,
           link: `/groups/${group.id}`,
         }));
-      } else if (item.name === "Groups") {
-        item.dropdown = [];
       }
     });
   }, [groups]);

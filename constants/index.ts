@@ -15,7 +15,7 @@ export const NAVBAR_ITEMS: {
     name: "Groups",
     link: "/",
     dropdown: [],
-  },
+  }
 ];
 
 export const SUCCESS_TOAST_STYLE = {
