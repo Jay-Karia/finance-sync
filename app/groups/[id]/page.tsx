@@ -1,29 +1,23 @@
 "use client";
 
+import { useAtomValue } from "jotai";
+import { useEffect, useState } from "react";
 import { groupsAtom } from "@/atoms";
 import { Group } from "@/types/group";
-import { useAtomValue } from "jotai";
-import { use, useEffect, useState } from "react";
+import Transactions from "@/components/transactions";
+import Summary from "@/components/summary";
+import GroupHeader from "@/components/layouts/group-header";
 
-export default function GroupPage({
-  params,
-}: {
-  params: Promise<{ id: string }>;
-}) {
-  const { id } = use(params);
+export default function GroupPage({ params }: { params: { id: string } }) {
+  const { id } = params;
   const groups = useAtomValue(groupsAtom);
   const [group, setGroup] = useState<Group | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Check the groups array for the specific one
-    function getGroup(id: string) {
-      const filteredGroup = groups.filter((group) => group.id === id);
-      setGroup(filteredGroup[0]);
-      setLoading(false);
-    }
-
-    getGroup(id);
+    const found = groups.find((g) => g.id === id) || null;
+    setGroup(found);
+    setLoading(false);
   }, [groups, id]);
 
   if (loading) {
@@ -45,14 +39,20 @@ export default function GroupPage({
   }
 
   return (
-    <div className="flex flex-col items-center w-full max-w-7xl px-4 pb-12">
-      <h1 className="text-2xl font-bold text-gray-800 dark:text-gray-200">
-        {group.name}
-      </h1>
-      <p className="text-gray-600 dark:text-gray-400 mt-2">
-        Group ID: {group.id}
-      </p>
-      {/* …more group details here… */}
+    <div className="dark:bg-gray-900">
+      <div className="max-w-4xl mx-auto px-4">
+        {/* Group Header */}
+        <GroupHeader group={group} />
+
+        {/* Summary & Transactions */}
+        <div className="mt-8 grid grid-cols-1 lg:grid-cols-2 gap-6">
+          {/* Summary Card */}
+          <Summary />
+
+          {/* Transactions Card */}
+          <Transactions />
+        </div>
+      </div>
     </div>
   );
 }
