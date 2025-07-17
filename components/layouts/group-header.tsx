@@ -5,7 +5,7 @@ import { useSetAtom } from "jotai";
 import { groupsAtom } from "@/atoms";
 import { toast } from "sonner";
 import { ERROR_TOAST_STYLE, SUCCESS_TOAST_STYLE } from "@/constants";
-import EditName from "../edit-name";
+import EditGroup from "../edit-group";
 import DeleteGroup from "../delete-group";
 
 interface GroupHeaderProps {
@@ -68,9 +68,12 @@ export default function GroupHeader({ group }: GroupHeaderProps) {
           <div>
             <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-50 flex">
               {group.name}
-              <EditName groupName={group.name} groupId={group.id} />
+              <EditGroup group={group} />
               <DeleteGroup groupName={group.name} groupId={group.id} />
             </h1>
+            <p className="mt-2 text-gray-600 dark:text-gray-300">
+              {group.description}
+            </p>
 
             <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">
               Created by{" "}
@@ -80,7 +83,7 @@ export default function GroupHeader({ group }: GroupHeaderProps) {
               on <time dateTime={group.date}>{group.date}</time>
             </p>
           </div>
-          <Button onClick={() => {}} className="mt-4 sm:mt-0">
+          <Button onClick={() => {}} className="mt-4 sm:mt-0 cursor-pointer">
             Add Expense
           </Button>
         </div>

@@ -15,27 +15,31 @@ import { Input } from "@/components/ui/input";
 import { ERROR_TOAST_STYLE, SUCCESS_TOAST_STYLE } from "@/constants";
 import { FaPencil } from "react-icons/fa6";
 import { toast } from "sonner";
+import { Group } from "@/types/group";
+import { Label } from "./ui/label";
 
-export default function EditName({
-  groupId,
-  groupName,
-}: {
-  groupId: string;
-  groupName: string;
-}) {
+export default function EditGroup({ group }: { group: Group }) {
   const setGroups = useSetAtom(groupsAtom);
-  const [name, setName] = useState(groupName);
+  const [name, setName] = useState(group.name);
+  const [description, setDescription] = useState(group.description || "");
 
   function onSubmit() {
-    const trimmed = name.trim();
-    if (!trimmed) {
+    const trimmedName = name.trim();
+    const trimmedDescription = description.trim();
+
+    if (!trimmedName) {
       toast.error("Name cannot be empty", ERROR_TOAST_STYLE);
       return;
     }
+
     setGroups((prev) =>
-      prev.map((g) => (g.id === groupId ? { ...g, name: trimmed } : g))
+      prev.map((g) =>
+        g.id === group.id
+          ? { ...g, name: trimmedName, description: trimmedDescription }
+          : g
+      )
     );
-    toast.success("Group name updated", SUCCESS_TOAST_STYLE);
+    toast.success("Group updated", SUCCESS_TOAST_STYLE);
   }
 
   return (
@@ -48,14 +52,22 @@ export default function EditName({
         </DialogTrigger>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
-            <DialogTitle>Edit Group Name</DialogTitle>
+            <DialogTitle>Edit Group</DialogTitle>
           </DialogHeader>
           <div className="grid gap-4">
+            <Label htmlFor="group-name">Name</Label>
             <Input
               id="group-name"
               name="name"
               onChange={(e) => setName(e.target.value)}
-              defaultValue={groupName}
+              defaultValue={group.name}
+            />
+            <Label htmlFor="group-name">Description</Label>
+            <Input
+              id="group-description"
+              name="description"
+              onChange={(e) => setDescription(e.target.value)}
+              defaultValue={group.description}
             />
           </div>
           <DialogFooter>
@@ -64,7 +76,7 @@ export default function EditName({
             </DialogClose>
             <DialogClose asChild>
               <Button type="submit" onClick={onSubmit}>
-                Change Name
+                Save Changes
               </Button>
             </DialogClose>
           </DialogFooter>
