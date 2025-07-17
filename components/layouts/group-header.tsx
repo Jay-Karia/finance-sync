@@ -6,6 +6,7 @@ import { groupsAtom } from "@/atoms";
 import { toast } from "sonner";
 import { ERROR_TOAST_STYLE, SUCCESS_TOAST_STYLE } from "@/constants";
 import EditName from "../edit-name";
+import DeleteGroup from "../delete-group";
 
 interface GroupHeaderProps {
   group: Group;
@@ -56,7 +57,7 @@ export default function GroupHeader({ group }: GroupHeaderProps) {
       const inputField = e.currentTarget;
       const member = inputField.value.trim();
       handleAddMember(member);
-      inputField.value = ""; // Clear the input field after adding
+      inputField.value = "";
     }
   }
 
@@ -68,6 +69,7 @@ export default function GroupHeader({ group }: GroupHeaderProps) {
             <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-50 flex">
               {group.name}
               <EditName groupName={group.name} groupId={group.id} />
+              <DeleteGroup groupName={group.name} groupId={group.id} />
             </h1>
 
             <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">
@@ -106,7 +108,7 @@ export default function GroupHeader({ group }: GroupHeaderProps) {
                       handleRemoveMember(index);
                       e.preventDefault();
                     }}
-                    className="text-yellow-700 hover:text-yellow-900 dark:text-yellow-300 dark:hover:text-yellow-100 flex-shrink-0 ml-1"
+                    className="text-yellow-700 hover:text-yellow-900 dark:text-yellow-300 dark:hover:text-yellow-100 flex-shrink-0 ml-1 cursor-pointer"
                   >
                     <FaX size={12} />
                   </button>

@@ -63,7 +63,9 @@ export default function EditName({
               <Button variant="outline">Cancel</Button>
             </DialogClose>
             <DialogClose asChild>
-              <Button type="submit" onClick={onSubmit}>Save changes</Button>
+              <Button type="submit" onClick={onSubmit}>
+                Change Name
+              </Button>
             </DialogClose>
           </DialogFooter>
         </DialogContent>

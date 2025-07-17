@@ -21,6 +21,7 @@ import { useAtom } from "jotai/react";
 import { groupsAtom } from "@/atoms";
 import { generateBase64Id } from "@/lib/utils";
 import { toast } from "sonner";
+import { ERROR_TOAST_STYLE, SUCCESS_TOAST_STYLE } from "@/constants";
 
 export default function NewGroupPage() {
   const [groups, setGroups] = useAtom(groupsAtom);
@@ -46,20 +47,13 @@ export default function NewGroupPage() {
       groupsCopy.push(newGroup);
       setGroups(groupsCopy);
       form.reset();
-      toast.success("Group created successfully!", {
-        style: {
-          background: "#f0f4f8",
-          color: "#333",
-        },
-      });
+      toast.success("Group created successfully!", SUCCESS_TOAST_STYLE);
     } catch (error) {
       console.error("Failed to create group:", error);
-      toast.error("Failed to create group. Please try again.", {
-        style: {
-          background: "#f8d7da",
-          color: "#721c24",
-        },
-      });
+      toast.error(
+        "Failed to create group. Please try again.",
+        ERROR_TOAST_STYLE
+      );
     }
   }
 
