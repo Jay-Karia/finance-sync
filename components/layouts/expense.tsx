@@ -24,6 +24,8 @@ import {
   SelectValue,
 } from "../ui/select";
 import { Textarea } from "../ui/textarea";
+import Split from "../split";
+import { Separator } from "../ui/separator";
 
 // When the expense is given by the group.
 export default function Expense({ group }: { group: Group }) {
@@ -41,6 +43,9 @@ export default function Expense({ group }: { group: Group }) {
       createdBy: group.createdBy || "",
     },
   });
+
+  const splitType = form.watch("splitType");
+  const splitBetween = form.watch("splitBetween");
 
   function onSubmit(values: z.infer<typeof newExpenseSchema>) {
     // Handle form submission logic here
@@ -141,6 +146,8 @@ export default function Expense({ group }: { group: Group }) {
               )}
             />
 
+            <Separator />
+
             {/* Split Type */}
             <FormField
               control={form.control}
@@ -211,6 +218,11 @@ export default function Expense({ group }: { group: Group }) {
                 </FormItem>
               )}
             />
+
+            {/* Split */}
+            <Split users={splitBetween} splitType={splitType} />
+
+            <Separator />
 
             {/* Date */}
             <FormField
