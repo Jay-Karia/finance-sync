@@ -23,6 +23,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui/select";
+import { Textarea } from "../ui/textarea";
 
 // When the expense is given by the group.
 export default function Expense({ group }: { group: Group }) {
@@ -50,6 +51,7 @@ export default function Expense({ group }: { group: Group }) {
       <div className="p-6 md:p-8 w-full bg-white dark:bg-gray-800/50">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+            {/* Name */}
             <FormField
               control={form.control}
               name="name"
@@ -70,6 +72,7 @@ export default function Expense({ group }: { group: Group }) {
               )}
             />
 
+            {/* Amount */}
             <FormField
               control={form.control}
               name="amount"
@@ -85,6 +88,11 @@ export default function Expense({ group }: { group: Group }) {
                       placeholder="100.00"
                       {...field}
                       className="focus-visible:ring-gray-300 border-gray-300 dark:border-gray-600"
+                      onChange={(e) => {
+                        const value = parseFloat(e.target.value);
+                        field.onChange(value);
+                      }}
+                      step="0.1"
                     />
                   </FormControl>
                   <FormMessage />
@@ -92,6 +100,7 @@ export default function Expense({ group }: { group: Group }) {
               )}
             />
 
+            {/* Paid By */}
             <FormField
               control={form.control}
               name="paidBy"
@@ -203,6 +212,7 @@ export default function Expense({ group }: { group: Group }) {
               )}
             />
 
+            {/* Date */}
             <FormField
               control={form.control}
               name="date"
@@ -214,6 +224,27 @@ export default function Expense({ group }: { group: Group }) {
                   <FormControl>
                     <Input
                       type="date"
+                      {...field}
+                      className="focus-visible:ring-gray-300 border-gray-300 dark:border-gray-600 w-max"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            {/* Notes */}
+            <FormField
+              control={form.control}
+              name="notes"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-gray-700 dark:text-gray-300 font-medium">
+                    Notes
+                  </FormLabel>
+                  <FormControl>
+                    <Textarea
+                      placeholder="Optional notes about the expense"
                       {...field}
                       className="focus-visible:ring-gray-300 border-gray-300 dark:border-gray-600"
                     />

@@ -4,7 +4,7 @@ export const expenseSchema = z.object({
   id: z.string().optional(),
   groupId: z.string().optional(),
   name: z.string().min(1, "Expense name is required"),
-  amount: z.number().min(0.01, "Amount must be greater than 0"),
+  amount: z.number("Expected a number").min(0.01, "Amount must be greater than 0"),
   date: z.string().optional(),
   paidBy: z.array(z.string()).min(1, "At least one person must pay the expense"),
   splitBetween: z.array(z.string()).min(1, "At least one person must split the expense"),
