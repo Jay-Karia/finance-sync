@@ -44,6 +44,10 @@ export default function NewGroupPage() {
         ...values,
         id: generateBase64Id(),
       };
+      // Add the creator as the member
+      if (newGroup.createdBy) {
+        newGroup.members.push(newGroup.createdBy);
+      }
       groupsCopy.push(newGroup);
       setGroups(groupsCopy);
       form.reset();
@@ -74,7 +78,7 @@ export default function NewGroupPage() {
         </div>
 
         {/* Form */}
-        <div className="p-6 md:p-8 w-full bg-white dark:bg-gray-800/50">QA
+        <div className="p-6 md:p-8 w-full bg-white dark:bg-gray-800/50">
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
               {/* Group Name */}
