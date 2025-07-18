@@ -1,4 +1,4 @@
-import { ERROR_TOAST_STYLE, SUCCESS_TOAST_STYLE } from "@/constants";
+import { ERROR_TOAST_STYLE } from "@/constants";
 import { useRef, useState } from "react";
 import { FaX } from "react-icons/fa6";
 import { toast } from "sonner";
@@ -7,16 +7,24 @@ export const MemberChipInput = ({
   value,
   onChange,
   placeholder = "Add members...",
+  createdBy,
 }: {
   value: string[];
   onChange: (value: string[]) => void;
   placeholder?: string;
+  createdBy: string;
 }) => {
   const [inputValue, setInputValue] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
 
   const addMember = (member: string) => {
     const trimmedMember = member.trim();
+    // Show a toast if the member is creator
+    if (trimmedMember === createdBy) {
+      toast.error("You cannot add yourself as a member", ERROR_TOAST_STYLE);
+      return;
+    }
+
     if (trimmedMember && !value.includes(trimmedMember)) {
       onChange([...value, trimmedMember]);
     }
@@ -24,11 +32,6 @@ export const MemberChipInput = ({
     // Show a toast if the member already exists
     if (value.includes(trimmedMember)) {
       toast.error("Member already exists in the list", ERROR_TOAST_STYLE);
-    }
-
-    // Show a success toast when a member is added
-    if (!value.includes(trimmedMember)) {
-      toast.success("Member added successfully", SUCCESS_TOAST_STYLE);
     }
   };
 

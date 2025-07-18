@@ -129,7 +129,7 @@ export default function Expense({ group }: { group: Group }) {
                             }}
                             className="rounded border-gray-300 dark:border-gray-600"
                           />
-                          <span className="text-gray-700 dark:text-gray-300">
+                          <span className="text-gray-700 dark:text-gray-300 w-max">
                             {member}
                           </span>
                         </label>

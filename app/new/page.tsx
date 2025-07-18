@@ -15,7 +15,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { MemberChipInput } from "@/components/ui/chip";
+import { MemberChipInput } from "@/components/ui/input-chip";
 import { FaPlus } from "react-icons/fa6";
 import { useAtom } from "jotai/react";
 import { groupsAtom } from "@/atoms";
@@ -158,6 +158,7 @@ export default function NewGroupPage() {
                         value={field.value}
                         onChange={field.onChange}
                         placeholder="Type name and press comma or Enter"
+                        createdBy={form.getValues("createdBy")}
                       />
                     </FormControl>
                     <FormDescription className="text-sm text-gray-500 dark:text-gray-400 mt-2">
