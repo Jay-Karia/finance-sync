@@ -1,7 +1,7 @@
 "use client";
 
 import { useAtomValue } from "jotai";
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 import { groupsAtom } from "@/atoms";
 import { Group } from "@/types/group";
 import Transactions from "@/components/transactions";
@@ -9,8 +9,12 @@ import Summary from "@/components/summary";
 import GroupHeader from "@/components/layouts/group-header";
 import Settle from "@/components/settle";
 
-export default function GroupPage({ params }: { params: { id: string } }) {
-  const { id } = params;
+export default function GroupPage({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
+  const { id } = use(params);
   const groups = useAtomValue(groupsAtom);
   const [group, setGroup] = useState<Group | null>(null);
   const [loading, setLoading] = useState(true);

@@ -3,16 +3,16 @@
 import { groupsAtom } from "@/atoms";
 import { Group } from "@/types/group";
 import { useAtomValue } from "jotai";
-import { useState, useEffect } from "react";
+import { useState, useEffect, use } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Expense from "@/components/layouts/expense";
 
 export default function AddExpensePage({
   params,
 }: {
-  params: { groupId: string };
+  params: Promise<{ groupId: string }>;
 }) {
-  const { groupId } = params;
+  const { groupId } = use(params);
   const groups = useAtomValue(groupsAtom);
   const [group, setGroup] = useState<Group | null>(null);
   const [loading, setLoading] = useState(true);
