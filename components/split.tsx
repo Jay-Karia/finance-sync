@@ -1,74 +1,82 @@
 "use client";
 
 import { Input } from "./ui/input";
-import { Label } from "./ui/label";
+import {
+  FormField,
+  FormItem,
+  FormLabel,
+  FormControl,
+  FormMessage,
+} from "./ui/form";
+import { Control } from "react-hook-form";
 
 interface SplitProps {
   users: string[];
-  splitType: "percentage" | "fraction" | "amount" | "equally";
+  splitType: "equally" | "percentage" | "amount" | "fraction";
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  control: Control<any>;
 }
 
-export default function Split({ users, splitType }: SplitProps) {
-  // Percentage
-  if (splitType === "percentage") {
-    return (
-      <div className="flex flex-col gap-4">
-        <Label className="text-gray-700 dark:text-gray-300 font-medium">
-          Percentage Split <span className="text-red-500">*</span>
-        </Label>
-        {users.map((user) => (
-          <div key={user} className="flex items-center gap-2">
-            <Label className="text-gray-700 dark:text-gray-300">{user}</Label>
-            <Input
-              type="number"
-              placeholder="Percentage"
-              className="focus-visible:ring-gray-300 border-gray-300 dark:border-gray-600 w-max"
-            />
-          </div>
-        ))}
-      </div>
-    );
-  }
+export default function Split({ users, splitType, control }: SplitProps) {
+  const title =
+    splitType === "percentage"
+      ? "Percentage Split"
+      : splitType === "amount"
+      ? "Amount Split"
+      : "Fraction Split";
 
-  // Amount
-  if (splitType === "amount") {
-    return (
-      <div className="flex flex-col gap-4">
-        <Label className="text-gray-700 dark:text-gray-300 font-medium">
-          Amount Split <span className="text-red-500">*</span>
-        </Label>
-        {users.map((user) => (
-          <div key={user} className="flex items-center gap-2">
-            <Label className="text-gray-700 dark:text-gray-300">{user}</Label>
-            <Input
-              type="number"
-              placeholder="Amount"
-              className="focus-visible:ring-gray-300 border-gray-300 dark:border-gray-600 w-max"
-            />
-          </div>
-        ))}
-      </div>
-    );
-  }
+  if (splitType === "equally") return null;
 
-  // Fraction
-  if (splitType === "fraction") {
-    return (
-      <div className="flex flex-col gap-4">
-        <Label className="text-gray-700 dark:text-gray-300 font-medium">
-          Fraction Split <span className="text-red-500">*</span>
-        </Label>
-        {users.map((user) => (
-          <div key={user} className="flex items-center gap-2">
-            <Label className="text-gray-700 dark:text-gray-300">{user}</Label>
-            <Input
-              type="text"
-              placeholder="Fraction (e.g., 1/2)"
-              className="focus-visible:ring-gray-300 border-gray-300 dark:border-gray-600 w-max"
-            />
-          </div>
-        ))}
-      </div>
-    );
-  }
+  return (
+    <div className="flex flex-col gap-4">
+      <FormLabel className="text-gray-700 dark:text-gray-300 font-medium">
+        {title} <span className="text-red-500">*</span>
+      </FormLabel>
+
+      {users.map((user, idx) => {
+        const name = `${splitType}.${idx}` as const;
+        return (
+          <FormField
+            key={user}
+            control={control}
+            name={name}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>{user}</FormLabel>
+                <FormControl>
+                  <Input
+                    type={splitType === "fraction" ? "text" : "number"}
+                    placeholder={
+                      splitType === "fraction"
+                        ? "1/2"
+                        : splitType === "percentage"
+                        ? "25"
+                        : splitType === "amount"
+                        ? "10.5"
+                        : undefined
+                    }
+                    // always pass a value so it never goes uncontrolled
+                    value={field.value ?? ""}
+                    onChange={(e) => {
+                      const raw = e.target.value;
+                      if (splitType === "fraction") {
+                        field.onChange(raw);
+                      } else {
+                        const num = parseFloat(raw);
+                        field.onChange(isNaN(num) ? undefined : num);
+                      }
+                    }}
+                    // specify step for numeric inputs
+                    step={splitType === "amount" ? "0.1" : "1"}
+                    className="focus-visible:ring-gray-300 border-gray-300 dark:border-gray-600 w-max"
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        );
+      })}
+    </div>
+  );
 }

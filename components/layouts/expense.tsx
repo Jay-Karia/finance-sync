@@ -40,6 +40,9 @@ export default function Expense({ group }: { group: Group }) {
       splitType: "equally",
       userShares: {},
       notes: "",
+      fractions: Array(group.members.length).fill(""),
+      percentages: Array(group.members.length).fill(0),
+      amounts: Array(group.members.length).fill(0),
       createdBy: group.createdBy || "",
     },
   });
@@ -218,9 +221,6 @@ export default function Expense({ group }: { group: Group }) {
                 </FormItem>
               )}
             />
-
-            {/* Split */}
-            <Split users={splitBetween} splitType={splitType} />
 
             <Separator />
 
