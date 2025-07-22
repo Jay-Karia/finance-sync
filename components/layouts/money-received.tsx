@@ -1,9 +1,9 @@
 "use client";
 
-import { newMoneyGivenSchema } from "@/schema/money-given";
+import { newMoneyReceivedSchema } from "@/schema/money-received";
+import { Group } from "@/types/group";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import z from "zod";
 import {
   Form,
   FormControl,
@@ -14,30 +14,29 @@ import {
 } from "../ui/form";
 import {
   Select,
-  SelectTrigger,
-  SelectValue,
   SelectContent,
   SelectItem,
+  SelectTrigger,
+  SelectValue,
 } from "../ui/select";
-import { Group } from "@/types/group";
+import z from "zod";
 import { Input } from "../ui/input";
-import { Button } from "../ui/button";
 import { Separator } from "../ui/separator";
-import { Checkbox } from "../ui/checkbox";
+import { Button } from "../ui/button";
 import { Textarea } from "../ui/textarea";
 
-export default function MoneyGiven({ group }: { group: Group }) {
-  const form = useForm<z.infer<typeof newMoneyGivenSchema>>({
-    resolver: zodResolver(newMoneyGivenSchema),
+export default function MoneyReceived({ group }: { group: Group }) {
+  const form = useForm<z.infer<typeof newMoneyReceivedSchema>>({
+    resolver: zodResolver(newMoneyReceivedSchema),
     defaultValues: {
-      givenBy: "",
+      receivedBy: "",
       amount: 0,
       date: new Date().toISOString().split("T")[0],
-      givenTo: [],
+      receivedFrom: "",
     },
   });
 
-  function onSubmit(values: z.infer<typeof newMoneyGivenSchema>) {
+  function onSubmit(values: z.infer<typeof newMoneyReceivedSchema>) {
     // Handle form submission logic here
     console.log("Form submitted with values:", values);
   }
@@ -46,22 +45,19 @@ export default function MoneyGiven({ group }: { group: Group }) {
     <div className="p-6 md:p-8 w-full bg-white dark:bg-gray-800/50">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-          {/* Given By */}
+          {/* Received From */}
           <FormField
             control={form.control}
-            name="givenBy"
+            name="receivedFrom"
             render={({ field }) => (
               <FormItem>
                 <FormLabel className="text-gray-700 dark:text-gray-300 font-medium">
-                  Given By <span className="text-red-500">*</span>
+                  Received from <span className="text-red-500">*</span>
                 </FormLabel>
                 <FormControl>
-                  <Select
-                    onValueChange={field.onChange}
-                    defaultValue={field.value}
-                  >
+                  <Select onValueChange={field.onChange}>
                     <SelectTrigger className="w-[180px]">
-                      <SelectValue placeholder="Given By" />
+                      <SelectValue placeholder="Select a member" />
                     </SelectTrigger>
                     <SelectContent>
                       {group.members.map((member) => (
@@ -116,7 +112,7 @@ export default function MoneyGiven({ group }: { group: Group }) {
                 </FormLabel>
                 <FormControl>
                   <Textarea
-                    placeholder="Dinner, Gift, etc."
+                    placeholder="Enter purpose"
                     {...field}
                     className="focus-visible:ring-gray-300 border-gray-300 dark:border-gray-600"
                   />
@@ -126,41 +122,28 @@ export default function MoneyGiven({ group }: { group: Group }) {
             )}
           />
 
-          {/* Given To */}
+          {/* Received To */}
           <FormField
             control={form.control}
-            name="givenTo"
+            name="receivedBy"
             render={({ field }) => (
               <FormItem>
                 <FormLabel className="text-gray-700 dark:text-gray-300 font-medium">
-                  Given To <span className="text-red-500">*</span>
+                  Received By <span className="text-red-500">*</span>
                 </FormLabel>
                 <FormControl>
-                  <div className="space-y-2 flex flex-col sm:flex-row sm:flex-wrap gap-4">
-                    {group.members?.map((member) => (
-                      <label
-                        key={member}
-                        className="flex items-center space-x-2 w-max h-max"
-                      >
-                        <Checkbox
-                          checked={field.value.includes(member)}
-                          onCheckedChange={(checked) => {
-                            if (checked) {
-                              field.onChange([...field.value, member]);
-                            } else {
-                              field.onChange(
-                                field.value.filter((m) => m !== member)
-                              );
-                            }
-                          }}
-                          className="rounded border-gray-300 dark:border-gray-600"
-                        />
-                        <span className="text-gray-700 dark:text-gray-300">
+                  <Select onValueChange={field.onChange}>
+                    <SelectTrigger className="w-[180px]">
+                      <SelectValue placeholder="Received By" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {group.members.map((member) => (
+                        <SelectItem key={member} value={member}>
                           {member}
-                        </span>
-                      </label>
-                    ))}
-                  </div>
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
                 </FormControl>
                 <FormMessage />
               </FormItem>
