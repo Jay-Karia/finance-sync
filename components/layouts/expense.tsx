@@ -37,10 +37,7 @@ export default function Expense({ group }: { group: Group }) {
       paidBy: [],
       splitBetween: [],
       splitType: "equally",
-      userShares: {},
       notes: "",
-      percentages: Array<number>(group.members.length),
-      amounts: Array<number>(group.members.length),
       createdBy: group.createdBy || "",
     },
   });
@@ -292,9 +289,7 @@ export default function Expense({ group }: { group: Group }) {
                               onChange={(e) => {
                                 const value = parseFloat(e.target.value);
                                 const newAmounts = [...(field.value || [])];
-                                newAmounts[index] = isNaN(value)
-                                  ? 0
-                                  : value;
+                                newAmounts[index] = isNaN(value) ? 0 : value;
                                 field.onChange(newAmounts);
                               }}
                               step="0.1"
