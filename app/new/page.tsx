@@ -43,6 +43,7 @@ export default function NewGroupPage() {
       const newGroup = {
         ...values,
         id: generateBase64Id(),
+        expenses: [],
       };
       // Add the creator as the member
       if (newGroup.createdBy) {

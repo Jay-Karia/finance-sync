@@ -1,4 +1,5 @@
-import { z } from "zod"
+import { Expense } from "@/types/expense";
+import { z } from "zod";
 
 export const newGroupSchema = z.object({
   name: z.string().min(1, "Group name is required"),
@@ -6,8 +7,9 @@ export const newGroupSchema = z.object({
   members: z.array(z.string()),
   date: z.string().optional(),
   createdBy: z.string().min(1, "Created by is required"),
-})
+});
 
 export const groupSchema = newGroupSchema.extend({
-  id: z.string()
-})
+  id: z.string(),
+  expenses: z.array(z.custom<Expense>()),
+});

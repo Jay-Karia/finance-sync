@@ -25,9 +25,16 @@ import {
 } from "../ui/select";
 import { Textarea } from "../ui/textarea";
 import { Separator } from "../ui/separator";
+import { Expense as ExpenseType } from "@/types/expense";
+import { toast } from "sonner";
+import { ERROR_TOAST_STYLE, SUCCESS_TOAST_STYLE } from "@/constants";
+import { useSetAtom } from "jotai";
+import { groupsAtom } from "@/atoms";
 
 // When the expense is given by the group.
 export default function Expense({ group }: { group: Group }) {
+  const setGroups = useSetAtom(groupsAtom);
+
   const form = useForm<z.infer<typeof newExpenseSchema>>({
     resolver: zodResolver(newExpenseSchema),
     defaultValues: {
@@ -46,8 +53,37 @@ export default function Expense({ group }: { group: Group }) {
   const splitBetween = form.watch("splitBetween");
 
   function onSubmit(values: z.infer<typeof newExpenseSchema>) {
-    // Handle form submission logic here
-    console.log("Form submitted with values:", values);
+    try {
+      const expense: ExpenseType = {
+        id: btoa(Date.now().toString()), // simple base64 encoding of timestamp
+        groupId: group.id,
+        name: values.name,
+        amount: values.amount,
+        date: values.date,
+        paidBy: values.paidBy,
+        participants: values.splitBetween,
+        splitType: values.splitType,
+        notes: values.notes,
+      };
+
+      // Push the expense to the group array
+      group.expenses = [...(group.expenses || []), expense];
+      // Update the group
+      setGroups((prevGroups) =>
+        prevGroups.map((g) => (g.id === group.id ? group : g))
+      );
+
+      // Reset the form
+      form.reset();
+
+      toast("Expense created successfully!", SUCCESS_TOAST_STYLE);
+    } catch (error) {
+      console.error("Error creating expense:", error);
+      toast.error(
+        "Failed to create expense. Please try again.",
+        ERROR_TOAST_STYLE
+      );
+    }
   }
 
   return (
