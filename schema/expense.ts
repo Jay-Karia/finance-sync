@@ -18,17 +18,6 @@ export const newExpenseSchema = expenseSchema.omit({
   id: true,
   groupId: true,
 }).extend({
-  fractions: z.array(z.string()).optional().refine(
-    (fractions) => {
-      if (!fractions) return true;
-      const sum = fractions.reduce((acc, fraction) => {
-        const [numerator, denominator] = fraction.split('/').map(Number);
-        return acc + (numerator / denominator);
-      }, 0);
-      return Math.abs(sum - 1) < 0.0001; // Allow small floating point errors
-    },
-    { message: "Fractions must sum to 1" }
-  ),
   percentages: z.array(z.number("Expected Number")).optional().refine(
     (percentages) => {
       if (!percentages) return true;

@@ -24,7 +24,6 @@ import {
   SelectValue,
 } from "../ui/select";
 import { Textarea } from "../ui/textarea";
-import Split from "../split";
 import { Separator } from "../ui/separator";
 
 // When the expense is given by the group.
@@ -40,7 +39,6 @@ export default function Expense({ group }: { group: Group }) {
       splitType: "equally",
       userShares: {},
       notes: "",
-      fractions: Array(group.members.length).fill(""),
       percentages: Array(group.members.length).fill(0),
       amounts: Array(group.members.length).fill(0),
       createdBy: group.createdBy || "",
@@ -172,7 +170,6 @@ export default function Expense({ group }: { group: Group }) {
                         <SelectItem value="equally">Equally</SelectItem>
                         <SelectItem value="percentage">Percentage</SelectItem>
                         <SelectItem value="amount">Amount</SelectItem>
-                        <SelectItem value="fraction">Fraction</SelectItem>
                       </SelectContent>
                     </Select>
                   </FormControl>
@@ -221,6 +218,42 @@ export default function Expense({ group }: { group: Group }) {
                 </FormItem>
               )}
             />
+
+            {/* Percentage Split */}
+            {splitType === "percentage" && (
+              <FormField
+                control={form.control}
+                name="percentages"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="text-gray-700 dark:text-gray-300 font-medium">
+                      Percentage Split
+                    </FormLabel>
+                    <div className="space-y-2">
+                      {splitBetween.map((member) => (
+                        <div
+                          key={member}
+                          className="flex items-center space-x-2"
+                        >
+                          <span className="text-gray-700 dark:text-gray-300 w-24">
+                            {member}:
+                          </span>
+                          <FormControl>
+                            <Input
+                              type="number"
+                              placeholder="25"
+                              className="focus-visible:ring-gray-300 border-gray-300 dark:border-gray-600 w-max"
+                            />
+                          </FormControl>
+                          <span className="text-gray-500">%</span>
+                        </div>
+                      ))}
+                    </div>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            )}
 
             <Separator />
 
