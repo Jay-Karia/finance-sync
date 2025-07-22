@@ -8,6 +8,7 @@ import { ERROR_TOAST_STYLE, SUCCESS_TOAST_STYLE } from "@/constants";
 import EditGroup from "../edit-group";
 import DeleteGroup from "../delete-group";
 import Link from "next/link";
+import {Separator} from "../ui/separator";
 
 interface GroupHeaderProps {
   group: Group;
@@ -72,10 +73,9 @@ export default function GroupHeader({ group }: GroupHeaderProps) {
               <EditGroup group={group} />
               <DeleteGroup groupName={group.name} groupId={group.id} />
             </h1>
-            <p className="mt-2 text-gray-600 dark:text-gray-300">
-              {group.description}
-            </p>
-
+            {group.description && (
+              <p className="mt-1 text-gray-600">{group.description}</p>
+            )}
             <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">
               Created by{" "}
               <span className="font-medium text-gray-800 dark:text-gray-200">
@@ -92,6 +92,8 @@ export default function GroupHeader({ group }: GroupHeaderProps) {
             <Link href={`/add-expense/${group.id}`}>Add Expense</Link>
           </Button>
         </div>
+
+        <Separator className="my-8" />
 
         {/* Members */}
         <div className="mt-6 flex flex-wrap gap-2">
