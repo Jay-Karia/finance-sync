@@ -230,7 +230,7 @@ export default function Expense({ group }: { group: Group }) {
                       Percentage Split
                     </FormLabel>
                     <div className="space-y-2">
-                      {splitBetween.map((member) => (
+                      {splitBetween.map((member, index) => (
                         <div
                           key={member}
                           className="flex items-center space-x-2"
@@ -242,6 +242,17 @@ export default function Expense({ group }: { group: Group }) {
                             <Input
                               type="number"
                               placeholder="25"
+                              min={0}
+                              // value={field.value?.[index] || 0}
+                              onChange={(e) => {
+                                const value = parseFloat(e.target.value);
+                                const newPercentages = [...(field.value || [])];
+                                newPercentages[index] = isNaN(value)
+                                  ? 0
+                                  : value;
+                                field.onChange(newPercentages);
+                              }}
+                              step="0.1"
                               className="focus-visible:ring-gray-300 border-gray-300 dark:border-gray-600 w-max"
                             />
                           </FormControl>
