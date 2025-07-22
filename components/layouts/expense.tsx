@@ -189,7 +189,7 @@ export default function Expense({ group }: { group: Group }) {
                       {group.members?.map((member) => (
                         <label
                           key={member}
-                          className="flex items-center space-x-2 w-max"
+                          className="flex items-center space-x-2 w-max h-max"
                         >
                           <Checkbox
                             checked={field.value.includes(member)}
@@ -224,7 +224,7 @@ export default function Expense({ group }: { group: Group }) {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel className="text-gray-700 dark:text-gray-300 font-medium">
-                      Percentage Split
+                      Percentage Split <span className="text-red-500">*</span>
                     </FormLabel>
                     <div className="space-y-2">
                       {splitBetween.map((member, index) => (
@@ -270,7 +270,7 @@ export default function Expense({ group }: { group: Group }) {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel className="text-gray-700 dark:text-gray-300 font-medium">
-                      Amount Split
+                      Amount Split <span className="text-red-500">*</span>
                     </FormLabel>
                     <div className="space-y-2">
                       {splitBetween.map((member, index) => (
