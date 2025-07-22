@@ -289,7 +289,9 @@ export default function Expense({ group }: { group: Group }) {
                               onChange={(e) => {
                                 const value = parseFloat(e.target.value);
                                 const newAmounts = [...(field.value || [])];
-                                newAmounts[index] = isNaN(value) ? 0 : value;
+                                newAmounts[index] = isNaN(value)
+                                  ? 0
+                                  : value;
                                 field.onChange(newAmounts);
                               }}
                               step="0.1"
