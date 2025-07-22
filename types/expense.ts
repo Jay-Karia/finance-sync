@@ -8,5 +8,4 @@ export type Expense = {
   participants: string[]; // same as splitBetween
   splitType: "equally" | "percentage" | "amount" | "fraction";
   notes?: string;
-  createdBy?: string;
 };

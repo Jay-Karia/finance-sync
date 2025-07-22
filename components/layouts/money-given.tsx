@@ -25,8 +25,15 @@ import { Button } from "../ui/button";
 import { Separator } from "../ui/separator";
 import { Checkbox } from "../ui/checkbox";
 import { Textarea } from "../ui/textarea";
+import { toast } from "sonner";
+import { ERROR_TOAST_STYLE, SUCCESS_TOAST_STYLE } from "@/constants";
+import {Expense} from "@/types/expense";
+import {useSetAtom} from "jotai";
+import {groupsAtom} from "@/atoms";
 
 export default function MoneyGiven({ group }: { group: Group }) {
+  const setGroups = useSetAtom(groupsAtom);
+
   const form = useForm<z.infer<typeof newMoneyGivenSchema>>({
     resolver: zodResolver(newMoneyGivenSchema),
     defaultValues: {
@@ -38,8 +45,37 @@ export default function MoneyGiven({ group }: { group: Group }) {
   });
 
   function onSubmit(values: z.infer<typeof newMoneyGivenSchema>) {
-    // Handle form submission logic here
-    console.log("Form submitted with values:", values);
+    try {
+      const expense: Expense = {
+        id: btoa(Date.now().toString()), // simple base64 encoding of timestamp
+        groupId: group.id,
+        amount: values.amount,
+        name: values.forWhat,
+        paidBy: [values.givenBy],
+        participants: values.givenTo,
+        splitType: "equally",
+        date: values.date,
+        notes: "",
+      }
+
+      // Push the expense to the group array
+      group.expenses = [...(group.expenses || []), expense];
+      // Update the group
+      setGroups((prevGroups) =>
+        prevGroups.map((g) => (g.id === group.id ? group : g))
+      );
+
+      // Reset form
+      form.reset();
+
+      toast.success("Money given successfully!", SUCCESS_TOAST_STYLE);
+    } catch (error) {
+      console.error("Error submitting form:", error);
+      toast.error(
+        "Failed to submit money given. Please try again.",
+        ERROR_TOAST_STYLE
+      );
+    }
   }
 
   return (
