@@ -24,8 +24,15 @@ import { Input } from "../ui/input";
 import { Separator } from "../ui/separator";
 import { Button } from "../ui/button";
 import { Textarea } from "../ui/textarea";
+import { useSetAtom } from "jotai";
+import { groupsAtom } from "@/atoms";
+import { Expense } from "@/types/expense";
+import { toast } from "sonner";
+import { ERROR_TOAST_STYLE, SUCCESS_TOAST_STYLE } from "@/constants";
 
 export default function MoneyReceived({ group }: { group: Group }) {
+  const setGroups = useSetAtom(groupsAtom);
+
   const form = useForm<z.infer<typeof newMoneyReceivedSchema>>({
     resolver: zodResolver(newMoneyReceivedSchema),
     defaultValues: {
@@ -37,8 +44,37 @@ export default function MoneyReceived({ group }: { group: Group }) {
   });
 
   function onSubmit(values: z.infer<typeof newMoneyReceivedSchema>) {
-    // Handle form submission logic here
-    console.log("Form submitted with values:", values);
+    try {
+      const expense: Expense = {
+        id: btoa(Date.now().toString()), // simple base64 encoding of timestamp
+        groupId: group.id,
+        name: values.forWhat,
+        amount: values.amount,
+        date: values.date,
+        paidBy: [values.receivedFrom],
+        participants: [values.receivedBy],
+        splitType: "equally",
+        notes: "",
+      };
+
+      // Push the expense to the group array
+      group.expenses = [...(group.expenses || []), expense];
+      // Update the group
+      setGroups((prevGroups) =>
+        prevGroups.map((g) => (g.id === group.id ? group : g))
+      );
+
+      // Reset the form
+      form.reset();
+
+      toast("Money received successfully!", SUCCESS_TOAST_STYLE);
+    } catch (error) {
+      console.error("Error creating expense:", error);
+      toast.error(
+        "Failed to receive money. Please try again.",
+        ERROR_TOAST_STYLE
+      );
+    }
   }
 
   return (
@@ -52,7 +88,7 @@ export default function MoneyReceived({ group }: { group: Group }) {
             render={({ field }) => (
               <FormItem>
                 <FormLabel className="text-gray-700 dark:text-gray-300 font-medium">
-                  Received from <span className="text-red-500">*</span>
+                  Who gave <span className="text-red-500">*</span>
                 </FormLabel>
                 <FormControl>
                   <Select onValueChange={field.onChange}>

@@ -72,7 +72,7 @@ export default function MoneyGiven({ group }: { group: Group }) {
     } catch (error) {
       console.error("Error submitting form:", error);
       toast.error(
-        "Failed to submit money given. Please try again.",
+        "Failed to give money. Please try again.",
         ERROR_TOAST_STYLE
       );
     }
