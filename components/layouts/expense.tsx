@@ -30,6 +30,7 @@ import { toast } from "sonner";
 import { ERROR_TOAST_STYLE, SUCCESS_TOAST_STYLE } from "@/constants";
 import { useSetAtom } from "jotai";
 import { groupsAtom } from "@/atoms";
+import Link from "next/link";
 
 // When the expense is given by the group.
 export default function Expense({ group }: { group: Group }) {
@@ -378,9 +379,12 @@ export default function Expense({ group }: { group: Group }) {
           />
 
           <div className="flex flex-col sm:flex-row gap-4 pt-6 mt-4 border-t border-gray-100 dark:border-gray-700">
+            <Button className="w-1/2 bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-600" asChild>
+              <Link href={`/groups/${group.id}`}>Back</Link>
+            </Button>
             <Button
               type="submit"
-              className="sm:flex-1 bg-black hover:bg-gray-800 dark:bg-white dark:hover:bg-gray-200 text-white dark:text-black font-medium"
+              className="sm:flex-1 bg-black hover:bg-gray-800 dark:bg-white dark:hover:bg-gray-200 text-white dark:text-black font-medium w-1/2"
             >
               Create Expense
             </Button>

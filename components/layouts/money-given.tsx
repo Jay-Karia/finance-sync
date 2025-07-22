@@ -27,9 +27,10 @@ import { Checkbox } from "../ui/checkbox";
 import { Textarea } from "../ui/textarea";
 import { toast } from "sonner";
 import { ERROR_TOAST_STYLE, SUCCESS_TOAST_STYLE } from "@/constants";
-import {Expense} from "@/types/expense";
-import {useSetAtom} from "jotai";
-import {groupsAtom} from "@/atoms";
+import { Expense } from "@/types/expense";
+import { useSetAtom } from "jotai";
+import { groupsAtom } from "@/atoms";
+import Link from "next/link";
 
 export default function MoneyGiven({ group }: { group: Group }) {
   const setGroups = useSetAtom(groupsAtom);
@@ -56,7 +57,7 @@ export default function MoneyGiven({ group }: { group: Group }) {
         splitType: "equally",
         date: values.date,
         notes: "",
-      }
+      };
 
       // Push the expense to the group array
       group.expenses = [...(group.expenses || []), expense];
@@ -71,10 +72,7 @@ export default function MoneyGiven({ group }: { group: Group }) {
       toast.success("Money given successfully!", SUCCESS_TOAST_STYLE);
     } catch (error) {
       console.error("Error submitting form:", error);
-      toast.error(
-        "Failed to give money. Please try again.",
-        ERROR_TOAST_STYLE
-      );
+      toast.error("Failed to give money. Please try again.", ERROR_TOAST_STYLE);
     }
   }
 
@@ -227,6 +225,12 @@ export default function MoneyGiven({ group }: { group: Group }) {
           />
 
           <div className="flex flex-col sm:flex-row gap-4 pt-6 mt-4 border-t border-gray-100 dark:border-gray-700">
+            <Button
+              className="w-1/2 bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-600"
+              asChild
+            >
+              <Link href={`/groups/${group.id}`}>Back</Link>
+            </Button>
             <Button
               type="submit"
               className="sm:flex-1 bg-black hover:bg-gray-800 dark:bg-white dark:hover:bg-gray-200 text-white dark:text-black font-medium"
