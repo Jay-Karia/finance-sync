@@ -27,7 +27,7 @@ import { Checkbox } from "../ui/checkbox";
 import { Textarea } from "../ui/textarea";
 import { toast } from "sonner";
 import { ERROR_TOAST_STYLE, SUCCESS_TOAST_STYLE } from "@/constants";
-import { Expense } from "@/types/expense";
+import { Transaction } from "@/types/expense";
 import { useSetAtom } from "jotai";
 import { groupsAtom } from "@/atoms";
 import Link from "next/link";
@@ -47,7 +47,7 @@ export default function MoneyGiven({ group }: { group: Group }) {
 
   function onSubmit(values: z.infer<typeof newMoneyGivenSchema>) {
     try {
-      const expense: Expense = {
+      const expense: Transaction = {
         id: btoa(Date.now().toString()), // simple base64 encoding of timestamp
         groupId: group.id,
         amount: values.amount,
@@ -60,7 +60,7 @@ export default function MoneyGiven({ group }: { group: Group }) {
       };
 
       // Push the expense to the group array
-      group.expenses = [...(group.expenses || []), expense];
+      group.transactions = [...(group.transactions || []), expense];
       // Update the group
       setGroups((prevGroups) =>
         prevGroups.map((g) => (g.id === group.id ? group : g))

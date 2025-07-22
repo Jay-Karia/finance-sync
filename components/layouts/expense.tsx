@@ -25,7 +25,7 @@ import {
 } from "../ui/select";
 import { Textarea } from "../ui/textarea";
 import { Separator } from "../ui/separator";
-import { Expense as ExpenseType } from "@/types/expense";
+import { Transaction as ExpenseType } from "@/types/expense";
 import { toast } from "sonner";
 import { ERROR_TOAST_STYLE, SUCCESS_TOAST_STYLE } from "@/constants";
 import { useSetAtom } from "jotai";
@@ -68,7 +68,7 @@ export default function Expense({ group }: { group: Group }) {
       };
 
       // Push the expense to the group array
-      group.expenses = [...(group.expenses || []), expense];
+      group.transactions = [...(group.transactions || []), expense];
       // Update the total spent
       group.totalSpent = (group.totalSpent || 0) + values.amount;
       // Update the group

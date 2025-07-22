@@ -7,8 +7,8 @@ export default function Transactions({ group }: { group: Group }) {
         Transactions
       </h2>
       <div className="space-y-4">
-        {group.expenses && group.expenses.length > 0 ? (
-          group.expenses.map((exp) => (
+        {group.transactions && group.transactions.length > 0 ? (
+          group.transactions.map((exp) => (
             <div
               key={exp.id}
               className="flex justify-between items-center p-4 bg-white dark:bg-gray-800 rounded-md shadow-sm"

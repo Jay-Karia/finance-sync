@@ -29,10 +29,10 @@ export default function Summary({ group }: { group: Group }) {
           <FaCoins className="h-6 w-6 text-yellow-500" />
           <div className="ml-4">
             <p className="text-sm text-gray-500 dark:text-gray-400">
-              Total Expenses
+              Total Transactions
             </p>
             <p className="text-2xl font-semibold text-gray-900 dark:text-gray-100">
-              {group.expenses?.length || 0}
+              {group.transactions?.length || 0}
             </p>
           </div>
         </div>

@@ -1,4 +1,4 @@
-export type Expense = {
+export type Transaction = {
   id: string; // base64 or uuid
   groupId: string; // which group this belongs to
   name: string; // “For What?”

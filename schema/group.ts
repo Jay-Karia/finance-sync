@@ -1,4 +1,4 @@
-import { Expense } from "@/types/expense";
+import { Transaction } from "@/types/expense";
 import { z } from "zod";
 
 export const newGroupSchema = z.object({
@@ -11,6 +11,6 @@ export const newGroupSchema = z.object({
 
 export const groupSchema = newGroupSchema.extend({
   id: z.string(),
-  expenses: z.array(z.custom<Expense>()),
+  transactions: z.array(z.custom<Transaction>()),
   totalSpent: z.number(),
 })

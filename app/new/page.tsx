@@ -43,15 +43,21 @@ export default function NewGroupPage() {
       const newGroup = {
         ...values,
         id: generateBase64Id(),
-        expenses: [],
+        transactions: [],
+        totalSpent: 0,
       };
       // Add the creator as the member
       if (newGroup.createdBy) {
         newGroup.members.push(newGroup.createdBy);
       }
       groupsCopy.push(newGroup);
+
+      // Update the state
       setGroups(groupsCopy);
+
+      // Reset the form
       form.reset();
+
       toast.success("Group created successfully!", SUCCESS_TOAST_STYLE);
     } catch (error) {
       console.error("Failed to create group:", error);
