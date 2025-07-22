@@ -12,4 +12,5 @@ export const newGroupSchema = z.object({
 export const groupSchema = newGroupSchema.extend({
   id: z.string(),
   expenses: z.array(z.custom<Expense>()),
-});
+  totalSpent: z.number(),
+})

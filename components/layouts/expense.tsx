@@ -69,6 +69,8 @@ export default function Expense({ group }: { group: Group }) {
 
       // Push the expense to the group array
       group.expenses = [...(group.expenses || []), expense];
+      // Update the total spent
+      group.totalSpent = (group.totalSpent || 0) + values.amount;
       // Update the group
       setGroups((prevGroups) =>
         prevGroups.map((g) => (g.id === group.id ? group : g))
