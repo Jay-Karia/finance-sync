@@ -39,8 +39,8 @@ export default function Expense({ group }: { group: Group }) {
       splitType: "equally",
       userShares: {},
       notes: "",
-      percentages: Array(group.members.length).fill(0),
-      amounts: Array(group.members.length).fill(0),
+      percentages: Array<number>(group.members.length),
+      amounts: Array<number>(group.members.length),
       createdBy: group.createdBy || "",
     },
   });
@@ -243,7 +243,6 @@ export default function Expense({ group }: { group: Group }) {
                               type="number"
                               placeholder="25"
                               min={0}
-                              // value={field.value?.[index] || 0}
                               onChange={(e) => {
                                 const value = parseFloat(e.target.value);
                                 const newPercentages = [...(field.value || [])];
@@ -257,6 +256,51 @@ export default function Expense({ group }: { group: Group }) {
                             />
                           </FormControl>
                           <span className="text-gray-500">%</span>
+                        </div>
+                      ))}
+                    </div>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            )}
+
+            {/* Amount Split */}
+            {splitType === "amount" && (
+              <FormField
+                control={form.control}
+                name="amounts"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="text-gray-700 dark:text-gray-300 font-medium">
+                      Amount Split
+                    </FormLabel>
+                    <div className="space-y-2">
+                      {splitBetween.map((member, index) => (
+                        <div
+                          key={member}
+                          className="flex items-center space-x-2"
+                        >
+                          <span className="text-gray-700 dark:text-gray-300 w-24">
+                            {member}:
+                          </span>
+                          <FormControl>
+                            <Input
+                              type="number"
+                              placeholder="10.50"
+                              min={0}
+                              onChange={(e) => {
+                                const value = parseFloat(e.target.value);
+                                const newAmounts = [...(field.value || [])];
+                                newAmounts[index] = isNaN(value)
+                                  ? 0
+                                  : value;
+                                field.onChange(newAmounts);
+                              }}
+                              step="0.1"
+                              className="focus-visible:ring-gray-300 border-gray-300 dark:border-gray-600 w-max"
+                            />
+                          </FormControl>
                         </div>
                       ))}
                     </div>
