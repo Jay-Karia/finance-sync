@@ -184,33 +184,34 @@ export default function Expense({ group }: { group: Group }) {
                               control={form.control}
                               name="payAmount"
                               render={() => (
-                                <FormControl>
-                                  <Input
-                                    type="number"
-                                    min={0}
-                                    placeholder="0.00"
-                                    step="0.1"
-                                    className="focus-visible:ring-gray-300 border-gray-300 dark:border-gray-600"
-                                    onChange={(e) => {
-                                      const value =
-                                        parseFloat(e.target.value) || 0;
-                                      const currentPaidAmounts =
-                                        form.getValues("payAmount") || [];
-                                      const memberIndex =
-                                        group.members?.indexOf(member) || 0;
-                                      const newPaidAmounts = [
-                                        ...currentPaidAmounts,
-                                      ];
-                                      newPaidAmounts[memberIndex] = parseFloat(
-                                        value.toFixed(2)
-                                      );
-                                      form.setValue(
-                                        "payAmount",
-                                        newPaidAmounts
-                                      );
-                                    }}
-                                  />
-                                </FormControl>
+                                <FormItem>
+                                  <FormControl>
+                                    <Input
+                                      type="number"
+                                      min={0}
+                                      placeholder="0.00"
+                                      step="0.1"
+                                      className="focus-visible:ring-gray-300 border-gray-300 dark:border-gray-600"
+                                      onChange={(e) => {
+                                        const value =
+                                          parseFloat(e.target.value) || 0;
+                                        const currentPaidAmounts =
+                                          form.getValues("payAmount") || [];
+                                        const memberIndex =
+                                          group.members?.indexOf(member) || 0;
+                                        const newPaidAmounts = [
+                                          ...currentPaidAmounts,
+                                        ];
+                                        newPaidAmounts[memberIndex] =
+                                          parseFloat(value.toFixed(2));
+                                        form.setValue(
+                                          "payAmount",
+                                          newPaidAmounts
+                                        );
+                                      }}
+                                    />
+                                  </FormControl>
+                                </FormItem>
                               )}
                             />
                           )}

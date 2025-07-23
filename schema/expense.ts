@@ -30,10 +30,12 @@ export const newExpenseSchema = expenseSchema
     const { splitType, splitBetween, percentages, amounts, fractions, amount, payAmount, paidBy } =
       data;
 
+      console.log(payAmount)
+
     if (Math.abs(payAmount.reduce((a, b) => a + b, 0) - amount) > 0.01 && paidBy.length > 1) {
       ctx.addIssue({
         code: z.ZodIssueCode.custom,
-        path: ["payAmount"],
+        path: ["paidBy"],
         message: "Pay amounts must sum to total amount",
       });
     }
