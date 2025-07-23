@@ -57,6 +57,7 @@ export default function MoneyGiven({ group }: { group: Group }) {
         splitType: "equally",
         date: values.date,
         notes: "",
+        expenseType: "given",
       };
 
       // Push the expense to the group array

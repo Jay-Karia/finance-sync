@@ -56,6 +56,7 @@ export default function MoneyReceived({ group }: { group: Group }) {
         participants: [values.receivedBy],
         splitType: "equally",
         notes: "",
+        expenseType: "received",
       };
 
       // Push the expense to the group array

@@ -65,6 +65,7 @@ export default function Expense({ group }: { group: Group }) {
         participants: values.splitBetween,
         splitType: values.splitType,
         notes: values.notes,
+        expenseType: "expense",
       };
 
       // Push the expense to the group array

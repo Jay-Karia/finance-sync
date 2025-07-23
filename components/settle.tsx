@@ -1,6 +1,6 @@
 export default function Settle() {
   return (
-    <section>
+    <div className="max-w-4xl mx-auto px-4 py-8 space-y-2">
       <h2 className="text-xl font-semibold text-gray-800 dark:text-gray-200 mb-4">
         Settle Up
       </h2>
@@ -9,6 +9,6 @@ export default function Settle() {
           Calculate and settle balances with your group.
         </p>
       </div>
-    </section>
+    </div>
   );
 }
