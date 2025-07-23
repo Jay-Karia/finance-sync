@@ -79,8 +79,6 @@ export default function Expense({ group }: { group: Group }) {
         prevGroups.map((g) => (g.id === group.id ? group : g))
       );
 
-      console.log(expense);
-
       // Reset the form
       form.reset();
 
@@ -180,38 +178,43 @@ export default function Expense({ group }: { group: Group }) {
                           {member}
                         </span>
                         {/* Pay Amount */}
-                        {paidBy.includes(member) && paidBy.length > 1 && (
-                          <FormField
-                            control={form.control}
-                            name="payAmount"
-                            render={() => (
-                              <FormControl>
-                                <Input
-                                  type="number"
-                                  min={0}
-                                  placeholder="0.00"
-                                  step="0.1"
-                                  className="focus-visible:ring-gray-300 border-gray-300 dark:border-gray-600 w-1/4 ml-2"
-                                  onChange={(e) => {
-                                    const value =
-                                      parseFloat(e.target.value) || 0;
-                                    const currentPaidAmounts =
-                                      form.getValues("payAmount") || [];
-                                    const memberIndex =
-                                      group.members?.indexOf(member) || 0;
-                                    const newPaidAmounts = [
-                                      ...currentPaidAmounts,
-                                    ];
-                                    newPaidAmounts[memberIndex] = parseInt(
-                                      value.toFixed(2)
-                                    );
-                                    form.setValue("payAmount", newPaidAmounts);
-                                  }}
-                                />
-                              </FormControl>
-                            )}
-                          ></FormField>
-                        )}
+                        <div className="w-1/4 ml-2 h-6 flex items-center">
+                          {paidBy.includes(member) && paidBy.length > 1 && (
+                            <FormField
+                              control={form.control}
+                              name="payAmount"
+                              render={() => (
+                                <FormControl>
+                                  <Input
+                                    type="number"
+                                    min={0}
+                                    placeholder="0.00"
+                                    step="0.1"
+                                    className="focus-visible:ring-gray-300 border-gray-300 dark:border-gray-600"
+                                    onChange={(e) => {
+                                      const value =
+                                        parseFloat(e.target.value) || 0;
+                                      const currentPaidAmounts =
+                                        form.getValues("payAmount") || [];
+                                      const memberIndex =
+                                        group.members?.indexOf(member) || 0;
+                                      const newPaidAmounts = [
+                                        ...currentPaidAmounts,
+                                      ];
+                                      newPaidAmounts[memberIndex] = parseFloat(
+                                        value.toFixed(2)
+                                      );
+                                      form.setValue(
+                                        "payAmount",
+                                        newPaidAmounts
+                                      );
+                                    }}
+                                  />
+                                </FormControl>
+                              )}
+                            />
+                          )}
+                        </div>
                       </label>
                     ))}
                   </div>
