@@ -25,6 +25,11 @@ export default function Transactions({ group }: { group: Group }) {
       const transactionIndex = group.transactions.findIndex((t) => t.id === id);
       if (transactionIndex === -1) return;
 
+      // Update the total transaction amount
+      const expenseType = group.transactions[transactionIndex].expenseType;
+      if (expenseType === "expense") {
+        group.totalSpent -= group.transactions[transactionIndex].amount;
+      }
 
       // Create a new array without the removed transaction
       const updatedTransactions = [
@@ -34,12 +39,6 @@ export default function Transactions({ group }: { group: Group }) {
 
       // Update the group with the new transactions array
       group.transactions = updatedTransactions;
-
-      // Update the total transaction amount
-      const expenseType = group.transactions[transactionIndex].expenseType;
-      if (expenseType === "expense") {
-        group.totalSpent -= group.transactions[transactionIndex].amount;
-      }
 
       // Update the state
       setGroups((prevGroups) =>
