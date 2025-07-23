@@ -15,16 +15,12 @@ export const expenseSchema = z.object({
     .array(z.string())
     .min(1, { message: "At least one split participant is required" }),
   splitType: z.enum(["equally", "percentage", "amount", "fraction"]),
-  userShares: z.record(
-    z.string(),
-    z.number().min(0, { message: "Share must be non-negative" })
-  ),
   notes: z.string().optional(),
-  createdBy: z.string().optional(),
+  payAmount: z.array(z.number())
 });
 
 export const newExpenseSchema = expenseSchema
-  .omit({ id: true, groupId: true, userShares: true })
+  .omit({ id: true, groupId: true })
   .extend({
     percentages: z.array(z.number("Expected a number")).optional(),
     amounts: z.array(z.number("Expected a number")).optional(),

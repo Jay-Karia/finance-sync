@@ -5,6 +5,7 @@ export type Transaction = {
   amount: number; // total amount
   date?: string; // ISO string
   paidBy: string[]; // who fronted the cash
+  paidAmounts?: number[]; // amounts paid by each participant, if different
   participants: string[]; // same as splitBetween
   splitType: "equally" | "percentage" | "amount" | "fraction";
   expenseType: "expense" | "given" | "received";

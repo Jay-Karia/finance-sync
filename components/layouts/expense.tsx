@@ -46,12 +46,12 @@ export default function Expense({ group }: { group: Group }) {
       splitBetween: [],
       splitType: "equally",
       notes: "",
-      createdBy: group.createdBy || "",
     },
   });
 
   const splitType = form.watch("splitType");
   const splitBetween = form.watch("splitBetween");
+  const paidBy = form.watch("paidBy");
 
   function onSubmit(values: z.infer<typeof newExpenseSchema>) {
     try {
@@ -62,6 +62,7 @@ export default function Expense({ group }: { group: Group }) {
         amount: values.amount,
         date: values.date,
         paidBy: values.paidBy,
+        paidAmounts: values.payAmount,
         participants: values.splitBetween,
         splitType: values.splitType,
         notes: values.notes,
@@ -76,6 +77,8 @@ export default function Expense({ group }: { group: Group }) {
       setGroups((prevGroups) =>
         prevGroups.map((g) => (g.id === group.id ? group : g))
       );
+
+      console.log(expense);
 
       // Reset the form
       form.reset();
@@ -175,6 +178,26 @@ export default function Expense({ group }: { group: Group }) {
                         <span className="text-gray-700 dark:text-gray-300 w-max">
                           {member}
                         </span>
+                        {/* Pay Amount */}
+                        {paidBy.includes(member) && paidBy.length > 1 && (
+                          <Input
+                            type="number"
+                            min={0}
+                            placeholder="0.00"
+                            step="0.1"
+                            className="focus-visible:ring-gray-300 border-gray-300 dark:border-gray-600 w-20 ml-2"
+                            onChange={(e) => {
+                              const value = parseFloat(e.target.value) || 0;
+                              const currentPaidAmounts =
+                                form.getValues("payAmount") || [];
+                              const memberIndex =
+                                group.members?.indexOf(member) || 0;
+                              const newPaidAmounts = [...currentPaidAmounts];
+                              newPaidAmounts[memberIndex] = parseInt(value.toFixed(2));
+                              form.setValue("payAmount", newPaidAmounts);
+                            }}
+                          />
+                        )}
                       </label>
                     ))}
                   </div>
@@ -382,7 +405,10 @@ export default function Expense({ group }: { group: Group }) {
           />
 
           <div className="flex flex-col sm:flex-row gap-4 pt-6 mt-4 border-t border-gray-100 dark:border-gray-700">
-            <Button className="w-1/2 bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-600" asChild>
+            <Button
+              className="w-1/2 bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-600"
+              asChild
+            >
               <Link href={`/groups/${group.id}`}>Back</Link>
             </Button>
             <Button
