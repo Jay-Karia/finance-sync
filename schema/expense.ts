@@ -16,7 +16,7 @@ export const expenseSchema = z.object({
     .min(1, { message: "At least one split participant is required" }),
   splitType: z.enum(["equally", "percentage", "amount", "fraction"]),
   notes: z.string().optional(),
-  payAmount: z.array(z.number())
+  payAmount: z.array(z.number()),
 });
 
 export const newExpenseSchema = expenseSchema
@@ -27,8 +27,16 @@ export const newExpenseSchema = expenseSchema
     fractions: z.array(z.string()).optional(),
   })
   .superRefine((data, ctx) => {
-    const { splitType, splitBetween, percentages, amounts, fractions, amount } =
+    const { splitType, splitBetween, percentages, amounts, fractions, amount, payAmount } =
       data;
+
+    if (Math.abs(payAmount.reduce((a, b) => a + b, 0) - amount) > 0.01) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ["payAmount"],
+        message: "Pay amounts must sum to total amount",
+      });
+    }
 
     if (splitType === "percentage") {
       if (!percentages) {
