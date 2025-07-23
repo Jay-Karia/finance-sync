@@ -27,16 +27,35 @@ export const newExpenseSchema = expenseSchema
     fractions: z.array(z.string()).optional(),
   })
   .superRefine((data, ctx) => {
-    const { splitType, splitBetween, percentages, amounts, fractions, amount, payAmount, paidBy } =
-      data;
+    const {
+      splitType,
+      splitBetween,
+      percentages,
+      amounts,
+      fractions,
+      amount,
+      payAmount,
+      paidBy,
+    } = data;
 
-      console.log(payAmount)
+    console.log(payAmount, paidBy);
 
-    if (Math.abs(payAmount.reduce((a, b) => a + b, 0) - amount) > 0.01 && paidBy.length > 1) {
+    if (
+      Math.abs(payAmount.reduce((a, b) => a + b, 0) - amount) > 0.01 &&
+      paidBy.length > 1
+    ) {
       ctx.addIssue({
         code: z.ZodIssueCode.custom,
         path: ["paidBy"],
         message: "Pay amounts must sum to total amount",
+      });
+    }
+
+    if (paidBy.length > 1 && payAmount.length !== paidBy.length) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ["paidBy"],
+        message: "Must provide one pay amount per payer",
       });
     }
 

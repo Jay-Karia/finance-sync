@@ -156,7 +156,7 @@ export default function Expense({ group }: { group: Group }) {
                 </FormLabel>
                 <FormControl>
                   <div className="space-y-4">
-                    {group.members?.map((member: string) => (
+                    {group.members?.map((member: string, index: number) => (
                       <label
                         key={member}
                         className="flex items-center space-x-2"
@@ -197,12 +197,10 @@ export default function Expense({ group }: { group: Group }) {
                                           parseFloat(e.target.value) || 0;
                                         const currentPaidAmounts =
                                           form.getValues("payAmount") || [];
-                                        const memberIndex =
-                                          group.members?.indexOf(member) || 0;
                                         const newPaidAmounts = [
                                           ...currentPaidAmounts,
                                         ];
-                                        newPaidAmounts[memberIndex] =
+                                        newPaidAmounts[index] =
                                           parseFloat(value.toFixed(2));
                                         form.setValue(
                                           "payAmount",
