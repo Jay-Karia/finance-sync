@@ -25,6 +25,7 @@ export default function Transactions({ group }: { group: Group }) {
       const transactionIndex = group.transactions.findIndex((t) => t.id === id);
       if (transactionIndex === -1) return;
 
+
       // Create a new array without the removed transaction
       const updatedTransactions = [
         ...group.transactions.slice(0, transactionIndex),
@@ -33,6 +34,12 @@ export default function Transactions({ group }: { group: Group }) {
 
       // Update the group with the new transactions array
       group.transactions = updatedTransactions;
+
+      // Update the total transaction amount
+      const expenseType = group.transactions[transactionIndex].expenseType;
+      if (expenseType === "expense") {
+        group.totalSpent -= group.transactions[transactionIndex].amount;
+      }
 
       // Update the state
       setGroups((prevGroups) =>
@@ -86,7 +93,7 @@ export default function Transactions({ group }: { group: Group }) {
                           <div className="w-12 h-12 bg-yellow-100 dark:bg-yellow-900/20 rounded-full flex items-center justify-center">
                             <FaTriangleExclamation className="text-yellow-600 dark:text-yellow-400 text-[24px]" />
                           </div>
-                          <DialogTitle>Undo Transaction</DialogTitle>
+                          <DialogTitle>Remove Transaction</DialogTitle>
                         </div>
                       </DialogHeader>
                       <div className="grid gap-4">
