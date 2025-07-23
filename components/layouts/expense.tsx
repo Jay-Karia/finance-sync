@@ -46,6 +46,7 @@ export default function Expense({ group }: { group: Group }) {
       splitBetween: [],
       splitType: "equally",
       notes: "",
+      payAmount: [],
     },
   });
 
@@ -156,7 +157,7 @@ export default function Expense({ group }: { group: Group }) {
                   Paid By <span className="text-red-500">*</span>
                 </FormLabel>
                 <FormControl>
-                  <div className="space-y-2">
+                  <div className="space-y-4">
                     {group.members?.map((member: string) => (
                       <label
                         key={member}
@@ -190,7 +191,7 @@ export default function Expense({ group }: { group: Group }) {
                                   min={0}
                                   placeholder="0.00"
                                   step="0.1"
-                                  className="focus-visible:ring-gray-300 border-gray-300 dark:border-gray-600 w-20 ml-2"
+                                  className="focus-visible:ring-gray-300 border-gray-300 dark:border-gray-600 w-1/4 ml-2"
                                   onChange={(e) => {
                                     const value =
                                       parseFloat(e.target.value) || 0;

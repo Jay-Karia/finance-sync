@@ -27,10 +27,10 @@ export const newExpenseSchema = expenseSchema
     fractions: z.array(z.string()).optional(),
   })
   .superRefine((data, ctx) => {
-    const { splitType, splitBetween, percentages, amounts, fractions, amount, payAmount } =
+    const { splitType, splitBetween, percentages, amounts, fractions, amount, payAmount, paidBy } =
       data;
 
-    if (Math.abs(payAmount.reduce((a, b) => a + b, 0) - amount) > 0.01) {
+    if (Math.abs(payAmount.reduce((a, b) => a + b, 0) - amount) > 0.01 && paidBy.length > 1) {
       ctx.addIssue({
         code: z.ZodIssueCode.custom,
         path: ["payAmount"],
