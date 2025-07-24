@@ -50,7 +50,7 @@ export default function GroupPage({ params }: {params: Promise<{ id: string }>;}
       <Transactions group={group} />
 
       {/* Settle Up */}
-      <Settle />
+      <Settle group={group}/>
     </div>
   );
 }
