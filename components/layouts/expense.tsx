@@ -85,6 +85,7 @@ export default function Expense({ group }: { group: Group }) {
 
       // Reset the form
       form.reset();
+      payAmount.fill(0);
 
       toast("Expense created successfully!", SUCCESS_TOAST_STYLE);
     } catch (error) {
@@ -200,6 +201,7 @@ export default function Expense({ group }: { group: Group }) {
                                       min={0}
                                       placeholder="0.00"
                                       step="0.1"
+                                      value={payAmount[index] || ""}
                                       className="focus-visible:ring-gray-300 border-gray-300 dark:border-gray-600"
                                       onChange={(e) => {
                                         const value = parseFloat(e.target.value) || 0;
