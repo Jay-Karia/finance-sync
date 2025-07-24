@@ -34,6 +34,7 @@ export default function NewGroupPage() {
       members: [],
       date: new Date().toISOString().split("T")[0],
       createdBy: "",
+      userShares: {},
     },
   });
 
@@ -50,6 +51,11 @@ export default function NewGroupPage() {
       if (newGroup.createdBy) {
         newGroup.members.push(newGroup.createdBy);
       }
+      // Set the default values for user shares
+      newGroup.userShares = newGroup.members.reduce(
+        (acc, member) => ({ ...acc, [member]: 0 }),
+        {}
+      );
       groupsCopy.push(newGroup);
 
       // Update the state

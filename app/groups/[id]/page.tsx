@@ -39,7 +39,7 @@ export default function GroupPage({ params }: {params: Promise<{ id: string }>;}
   }
 
   return (
-    <div className="min-h-screen dark:bg-gray-900">
+    <div className="dark:bg-gray-900 h-max">
       {/* Group Header */}
       <GroupHeader group={group} />
 
