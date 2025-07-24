@@ -55,7 +55,6 @@ export default function Expense({ group }: { group: Group }) {
   const splitType = form.watch("splitType");
   const splitBetween = form.watch("splitBetween");
   const paidBy = form.watch("paidBy");
-  console.log(payAmount);
 
   function onSubmit(values: z.infer<typeof newExpenseSchema>) {
     try {

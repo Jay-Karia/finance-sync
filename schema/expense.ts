@@ -38,8 +38,6 @@ export const newExpenseSchema = expenseSchema
       paidBy,
     } = data;
 
-    console.log(payAmount, paidBy);
-
     if (
       Math.abs(payAmount.reduce((a, b) => a + b, 0) - amount) > 0.01 &&
       paidBy.length > 1
@@ -50,6 +48,16 @@ export const newExpenseSchema = expenseSchema
         message: "Pay amounts must sum to total amount",
       });
     }
+
+    // Check if the paidBy is selected and payAmount is zero
+    if (paidBy.some((_, index) => payAmount[index] === 0)) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ["paidBy"],
+        message: "Pay amount cannot be zero for selected payers",
+      });
+    }
+
 
     if (splitType === "percentage") {
       if (!percentages) {
