@@ -49,16 +49,6 @@ export const newExpenseSchema = expenseSchema
       });
     }
 
-    // Check if the paidBy is selected and payAmount is zero
-    if (paidBy.some((_, index) => payAmount[index] === 0)) {
-      ctx.addIssue({
-        code: z.ZodIssueCode.custom,
-        path: ["paidBy"],
-        message: "Pay amount cannot be zero for selected payers",
-      });
-    }
-
-
     if (splitType === "percentage") {
       if (!percentages) {
         ctx.addIssue({
