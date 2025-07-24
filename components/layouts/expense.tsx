@@ -31,10 +31,12 @@ import { ERROR_TOAST_STYLE, SUCCESS_TOAST_STYLE } from "@/constants";
 import { useSetAtom } from "jotai";
 import { groupsAtom } from "@/atoms";
 import Link from "next/link";
+import { useState } from "react";
 
 // When the expense is given by the group.
 export default function Expense({ group }: { group: Group }) {
   const setGroups = useSetAtom(groupsAtom);
+  const [payAmount, setPayAmount] = useState<number[]>(new Array<number>(group.members?.length || 0).fill(0));
 
   const form = useForm<z.infer<typeof newExpenseSchema>>({
     resolver: zodResolver(newExpenseSchema),
@@ -53,6 +55,7 @@ export default function Expense({ group }: { group: Group }) {
   const splitType = form.watch("splitType");
   const splitBetween = form.watch("splitBetween");
   const paidBy = form.watch("paidBy");
+  console.log(payAmount);
 
   function onSubmit(values: z.infer<typeof newExpenseSchema>) {
     try {
@@ -69,6 +72,7 @@ export default function Expense({ group }: { group: Group }) {
         notes: values.notes,
         expenseType: "expense",
       };
+
 
       // Push the expense to the group array
       group.transactions = [...(group.transactions || []), expense];
@@ -170,6 +174,11 @@ export default function Expense({ group }: { group: Group }) {
                               field.onChange(
                                 field.value.filter((m) => m !== member)
                               );
+
+                              // Reset the amount when unchecked
+                              const newPayAmount = [...payAmount];
+                              newPayAmount[index] = 0;
+                              setPayAmount(newPayAmount);
                             }
                           }}
                           className="rounded border-gray-300 dark:border-gray-600"
@@ -183,7 +192,7 @@ export default function Expense({ group }: { group: Group }) {
                             <FormField
                               control={form.control}
                               name="payAmount"
-                              render={() => (
+                              render={({ field: payAmountField }) => (
                                 <FormItem>
                                   <FormControl>
                                     <Input
@@ -193,19 +202,11 @@ export default function Expense({ group }: { group: Group }) {
                                       step="0.1"
                                       className="focus-visible:ring-gray-300 border-gray-300 dark:border-gray-600"
                                       onChange={(e) => {
-                                        const value =
-                                          parseFloat(e.target.value) || 0;
-                                        const currentPaidAmounts =
-                                          form.getValues("payAmount") || [];
-                                        const newPaidAmounts = [
-                                          ...currentPaidAmounts,
-                                        ];
-                                        newPaidAmounts[index] =
-                                          parseFloat(value.toFixed(2));
-                                        form.setValue(
-                                          "payAmount",
-                                          newPaidAmounts
-                                        );
+                                        const value = parseFloat(e.target.value) || 0;
+                                        const newPayAmount = [...payAmount];
+                                        newPayAmount[index] = value;
+                                        setPayAmount(newPayAmount);
+                                        payAmountField.onChange(newPayAmount);
                                       }}
                                     />
                                   </FormControl>

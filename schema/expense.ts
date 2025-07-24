@@ -51,14 +51,6 @@ export const newExpenseSchema = expenseSchema
       });
     }
 
-    if (paidBy.length > 1 && payAmount.length !== paidBy.length) {
-      ctx.addIssue({
-        code: z.ZodIssueCode.custom,
-        path: ["paidBy"],
-        message: "Must provide one pay amount per payer",
-      });
-    }
-
     if (splitType === "percentage") {
       if (!percentages) {
         ctx.addIssue({
