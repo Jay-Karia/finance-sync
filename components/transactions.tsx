@@ -15,6 +15,7 @@ import { useSetAtom } from "jotai";
 import { groupsAtom } from "@/atoms";
 import { ERROR_TOAST_STYLE, SUCCESS_TOAST_STYLE } from "@/constants";
 import {toast} from "sonner";
+import {revertUserShares} from "@/lib/share";
 
 export default function Transactions({ group }: { group: Group }) {
   const setGroups = useSetAtom(groupsAtom);
@@ -24,6 +25,9 @@ export default function Transactions({ group }: { group: Group }) {
       // Find the transaction to remove
       const transactionIndex = group.transactions.findIndex((t) => t.id === id);
       if (transactionIndex === -1) return;
+
+      // Update the user shares
+      group = revertUserShares(group, group.transactions[transactionIndex]);
 
       // Update the total transaction amount
       const expenseType = group.transactions[transactionIndex].expenseType;

@@ -32,12 +32,14 @@ import { useSetAtom } from "jotai";
 import { groupsAtom } from "@/atoms";
 import Link from "next/link";
 import { useState } from "react";
-import updateUserShares from "@/lib/share";
+import { updateUserShares } from "@/lib/share";
 
 // When the expense is given by the group.
 export default function Expense({ group }: { group: Group }) {
   const setGroups = useSetAtom(groupsAtom);
-  const [payAmount, setPayAmount] = useState<number[]>(new Array<number>(group.members?.length || 0).fill(0));
+  const [payAmount, setPayAmount] = useState<number[]>(
+    new Array<number>(group.members?.length || 0).fill(0)
+  );
 
   const form = useForm<z.infer<typeof newExpenseSchema>>({
     resolver: zodResolver(newExpenseSchema),
@@ -205,7 +207,8 @@ export default function Expense({ group }: { group: Group }) {
                                       value={payAmount[index] || ""}
                                       className="focus-visible:ring-gray-300 border-gray-300 dark:border-gray-600"
                                       onChange={(e) => {
-                                        const value = parseFloat(e.target.value) || 0;
+                                        const value =
+                                          parseFloat(e.target.value) || 0;
                                         const newPayAmount = [...payAmount];
                                         newPayAmount[index] = value;
                                         setPayAmount(newPayAmount);
