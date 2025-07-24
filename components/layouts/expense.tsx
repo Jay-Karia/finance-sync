@@ -32,6 +32,7 @@ import { useSetAtom } from "jotai";
 import { groupsAtom } from "@/atoms";
 import Link from "next/link";
 import { useState } from "react";
+import updateUserShares from "@/lib/share";
 
 // When the expense is given by the group.
 export default function Expense({ group }: { group: Group }) {
@@ -72,7 +73,8 @@ export default function Expense({ group }: { group: Group }) {
         expenseType: "expense",
       };
 
-
+      // Update the user shares
+      group = updateUserShares(group, expense);
       // Push the expense to the group array
       group.transactions = [...(group.transactions || []), expense];
       // Update the total spent

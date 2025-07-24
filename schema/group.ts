@@ -7,7 +7,7 @@ export const newGroupSchema = z.object({
   members: z.array(z.string()),
   date: z.string().optional(),
   createdBy: z.string().min(1, "Created by is required"),
-  userShares: z.record(z.string(), z.number()).optional(),
+  userShares: z.record(z.string(), z.number()),
 });
 
 export const groupSchema = newGroupSchema.extend({
