@@ -20,6 +20,16 @@ export default function GroupHeader({ group }: GroupHeaderProps) {
   function handleRemoveMember(index: number) {
     try {
       const removedMember = group.members[index];
+
+      // Check for the creator of the group
+      if (removedMember === group.createdBy) {
+        toast.error(
+          "Cannot remove the creator of the group.",
+          ERROR_TOAST_STYLE
+        );
+        return;
+      }
+
       // Update members array
       group.members.splice(index, 1);
 
