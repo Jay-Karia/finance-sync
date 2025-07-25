@@ -60,7 +60,7 @@ export default function updateSettlements(group: Group): SettleType[] {
     if (creditors[j][1] === 0) j++;
   }
 
-  // Return settled settlements plus new settlements
+  // Return only settled settlements plus new settlements (remove old unsettled ones)
   const allSettlements = [...settled, ...newSettlements];
   return allSettlements.map((settlement) => ({
     ...settlement,

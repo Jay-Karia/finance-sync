@@ -4,6 +4,7 @@ import { Button } from "./ui/button";
 import { useSetAtom } from "jotai";
 import { groupsAtom } from "@/atoms";
 import { CiUndo } from "react-icons/ci";
+import { FaX } from "react-icons/fa6";
 
 export default function Settle({ group }: { group: Group }) {
   const setGroups = useSetAtom(groupsAtom);
@@ -20,6 +21,18 @@ export default function Settle({ group }: { group: Group }) {
       }),
     };
 
+    // Update the global state with the modified group
+    setGroups((prevGroups) =>
+      prevGroups.map((g) => (g.id === group.id ? updatedGroup : g))
+    );
+  }
+
+  function handleRemoveSettlement(settlement: SettleType) {
+    // Update the group's settlements by removing the settled transaction
+    const updatedGroup = {
+      ...group,
+      settlements: group.settlements.filter((s) => s.id !== settlement.id),
+    };
     // Update the global state with the modified group
     setGroups((prevGroups) =>
       prevGroups.map((g) => (g.id === group.id ? updatedGroup : g))
@@ -91,6 +104,12 @@ export default function Settle({ group }: { group: Group }) {
                           className="ml-4"
                         >
                           <CiUndo className="text-xl" />
+                        </Button>
+                        <Button
+                          variant="ghost"
+                          onClick={() => handleRemoveSettlement(settlement)}
+                        >
+                          <FaX />
                         </Button>
                       </div>
                     </div>
