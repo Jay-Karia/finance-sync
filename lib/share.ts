@@ -162,12 +162,49 @@ export function revertUserShares(
       paidAmounts && paidAmounts.length === paidBy.length
         ? paidAmounts
         : paidBy.map(() => amount / paidBy.length);
+    // Update shares for all payers first
+    paidBy.forEach((payer, payerIdx) => {
+      const paid = payments[payerIdx];
+      updatedGroup.userShares[payer] =
+        (updatedGroup.userShares[payer] || 0) - paid;
+    });
+
+    // Then add back what each participant owed
     participants.forEach((member, idx) => {
-      const paid = payments[paidBy.indexOf(member)] || 0;
       const owed = splitAmounts[idx];
-      const net = paid - owed;
       updatedGroup.userShares[member] =
-        (updatedGroup.userShares[member] || 0) - net;
+        (updatedGroup.userShares[member] || 0) + owed;
+    });
+  }
+
+  // handle percentage-split expense in revert
+  if (
+    transaction.expenseType === "expense" &&
+    transaction.splitType === "percentage"
+  ) {
+    const { amount, participants, paidBy, paidAmounts, splitPercentages } =
+      transaction;
+    if (!splitPercentages || splitPercentages.length !== participants.length) {
+      throw new Error(
+        "Percentage split requires splitPercentages array matching participants length"
+      );
+    }
+    const payments =
+      paidAmounts && paidAmounts.length === paidBy.length
+        ? paidAmounts
+        : paidBy.map(() => amount / paidBy.length);
+    // Update shares for all payers first
+    paidBy.forEach((payer, payerIdx) => {
+      const paid = payments[payerIdx];
+      updatedGroup.userShares[payer] =
+        (updatedGroup.userShares[payer] || 0) - paid;
+    });
+
+    // Then add back what each participant owed based on percentage
+    participants.forEach((member, idx) => {
+      const owed = (splitPercentages[idx] / 100) * amount;
+      updatedGroup.userShares[member] =
+        (updatedGroup.userShares[member] || 0) + owed;
     });
   }
 
