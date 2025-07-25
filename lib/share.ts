@@ -12,7 +12,7 @@ export function updateUserShares(
     userShares: { ...(group.userShares || {}) },
   };
 
-  // only handle a simple equal‐split expense
+  // handle a simple equal‐split expense
   if (
     transaction.expenseType === "expense" &&
     transaction.splitType === "equally"
@@ -36,6 +36,32 @@ export function updateUserShares(
       } else {
         updatedGroup.userShares[member] =
           (updatedGroup.userShares[member] || 0) - share;
+      }
+    });
+  }
+
+  // handle a amount-split expense
+  if (
+    transaction.expenseType === "expense" &&
+    transaction.splitType === "amount"
+  ) {
+    const { amount, participants, paidBy, paidAmounts } = transaction;
+
+    // determine how much each payer actually paid, fallback to equal split among payers
+    const payments =
+      paidAmounts && paidAmounts.length === paidBy.length
+        ? paidAmounts
+        : paidBy.map(() => amount / paidBy.length);
+
+    participants.forEach((member) => {
+      const payIndex = paidBy.indexOf(member);
+      if (payIndex !== -1) {
+        const paid = payments[payIndex] || 0;
+        updatedGroup.userShares[member] =
+          (updatedGroup.userShares[member] || 0) + paid;
+      } else {
+        updatedGroup.userShares[member] =
+          (updatedGroup.userShares[member] || 0) - amount / participants.length;
       }
     });
   }

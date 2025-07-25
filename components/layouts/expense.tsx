@@ -73,6 +73,12 @@ export default function Expense({ group }: { group: Group }) {
         splitType: values.splitType,
         notes: values.notes,
         expenseType: "expense",
+        splitAmounts:
+          values.splitType === "amount" ? values.splitAmounts || [] : [],
+        splitPercentages:
+          values.splitType === "percentage"
+            ? values.splitPercentages || []
+            : [],
       };
 
       // Update the user shares
@@ -306,7 +312,7 @@ export default function Expense({ group }: { group: Group }) {
           {splitType === "percentage" && (
             <FormField
               control={form.control}
-              name="percentages"
+              name="splitPercentages"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel className="text-gray-700 dark:text-gray-300 font-medium">
@@ -347,7 +353,7 @@ export default function Expense({ group }: { group: Group }) {
           {splitType === "amount" && (
             <FormField
               control={form.control}
-              name="amounts"
+              name="splitAmounts"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel className="text-gray-700 dark:text-gray-300 font-medium">

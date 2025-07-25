@@ -7,7 +7,9 @@ export type Transaction = {
   paidBy: string[]; // who fronted the cash
   paidAmounts?: number[]; // amounts paid by each participant, if different
   participants: string[]; // same as splitBetween
-  splitType: "equally" | "percentage" | "amount" | "fraction";
+  splitType: "equally" | "percentage" | "amount";
   expenseType: "expense" | "given" | "received";
+  splitAmounts: number[],
+  splitPercentages: number[]; // percentages for each participant, if splitType is "percentage"
   notes?: string;
 };
