@@ -40,7 +40,7 @@ export function updateUserShares(
     });
   }
 
-  // handle a amount-split expense
+  // handle amount-split expense
   if (
     transaction.expenseType === "expense" &&
     transaction.splitType === "amount"
@@ -66,6 +66,37 @@ export function updateUserShares(
     // Then subtract what each participant owes
     participants.forEach((member, idx) => {
       const owed = splitAmounts[idx];
+      updatedGroup.userShares[member] =
+        (updatedGroup.userShares[member] || 0) - owed;
+    });
+  }
+
+  // handle percentage-split expense
+  if (
+    transaction.expenseType === "expense" &&
+    transaction.splitType === "percentage"
+  ) {
+    const { amount, participants, paidBy, paidAmounts, splitPercentages } =
+      transaction;
+    if (!splitPercentages || splitPercentages.length !== participants.length) {
+      throw new Error(
+        "Percentage split requires splitPercentages array matching participants length"
+      );
+    }
+    const payments =
+      paidAmounts && paidAmounts.length === paidBy.length
+        ? paidAmounts
+        : paidBy.map(() => amount / paidBy.length);
+    // Update shares for all payers first
+    paidBy.forEach((payer, payerIdx) => {
+      const paid = payments[payerIdx];
+      updatedGroup.userShares[payer] =
+        (updatedGroup.userShares[payer] || 0) + paid;
+    });
+
+    // Then subtract what each participant owes based on percentage
+    participants.forEach((member, idx) => {
+      const owed = (splitPercentages[idx] / 100) * amount;
       updatedGroup.userShares[member] =
         (updatedGroup.userShares[member] || 0) - owed;
     });
