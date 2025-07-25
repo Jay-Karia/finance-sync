@@ -4,4 +4,5 @@ export type SettleType = {
   amount: number;
   paidBy: string;
   paidTo: string;
+  settled: boolean;
 }

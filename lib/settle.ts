@@ -2,6 +2,8 @@ import { Group } from "@/types/group";
 import { SettleType } from "@/types/settle";
 
 export default function updateSettlements(group: Group): SettleType[] {
+  const useShares = group.userShares;
+
   return [
     {
       id: "1",
@@ -9,6 +11,7 @@ export default function updateSettlements(group: Group): SettleType[] {
       paidBy: "test1",
       paidTo: "test2",
       groupId: group.id,
+      settled: false,
     },
     {
       id: "2",
@@ -16,7 +19,23 @@ export default function updateSettlements(group: Group): SettleType[] {
       paidBy: "test3",
       paidTo: "test2",
       groupId: group.id,
+      settled: false,
+    },
+    {
+      id: "3",
+      amount: 30,
+      paidBy: "test3",
+      paidTo: "test2",
+      groupId: group.id,
+      settled: false,
+    },
+    {
+      id: "4",
+      amount: 30,
+      paidBy: "test3",
+      paidTo: "test2",
+      groupId: group.id,
+      settled: false,
     },
   ];
 }
-  
