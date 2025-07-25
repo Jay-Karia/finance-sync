@@ -75,11 +75,13 @@ export default function DeleteGroup({ groupName, groupId }: DeleteGroupProps) {
           </div>
           <DialogFooter>
             <DialogClose asChild>
-              <Button variant="outline">Cancel</Button>
+              <Button variant="outline" className="w-1/2">
+                Cancel
+              </Button>
             </DialogClose>
             <Button
               type="submit"
-              className="bg-red-600 hover:bg-red-700 text-white"
+              className="bg-red-600 hover:bg-red-700 text-white w-1/2"
               onClick={onSubmit}
             >
               Delete

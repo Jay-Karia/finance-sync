@@ -108,13 +108,6 @@ export default function Navbar() {
                       ) : (
                         <div className="text-sm text-neutral-500 dark:text-neutral-400 py-1.5">
                           <p>No groups found</p>
-                          <Link
-                            href="/groups/new"
-                            onClick={() => setIsMobileMenuOpen(false)}
-                            className="text-blue-500 hover:text-blue-600 mt-1 block"
-                          >
-                            Create your first group
-                          </Link>
                         </div>
                       )}
                     </div>
