@@ -1,5 +1,6 @@
 import { Transaction } from "@/types/expense";
 import { Group } from "@/types/group";
+import updateSettlements from "./settle";
 
 export function updateUserShares(
   group: Group,
@@ -34,6 +35,9 @@ export function updateUserShares(
       }
     });
   }
+
+  // update settlements
+  updatedGroup.settlements = updateSettlements(updatedGroup);
 
   return updatedGroup;
 }
@@ -71,6 +75,9 @@ export function revertUserShares(
       }
     });
   }
+
+  // update settlements
+  updatedGroup.settlements = updateSettlements(updatedGroup);
 
   return updatedGroup;
 }

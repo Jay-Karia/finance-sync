@@ -35,6 +35,7 @@ export default function NewGroupPage() {
       date: new Date().toISOString().split("T")[0],
       createdBy: "",
       userShares: {},
+      settlements: [],
     },
   });
 
