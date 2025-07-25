@@ -64,7 +64,9 @@ export default function Navbar() {
         {/* Mobile Navigation */}
         <MobileNav>
           <MobileNavHeader>
-            <Logo />
+            <Link href="/" className="z-10">
+              <Logo />
+            </Link>
             <div className="flex flex-row justify-center gap-4 items-center">
               <MobileNavToggle
                 isOpen={isMobileMenuOpen}
@@ -114,14 +116,14 @@ export default function Navbar() {
                   )}
                 </div>
               ) : (
-                <a
+                <Link
                   key={`mobile-link-${idx}`}
                   href={item.link}
                   onClick={() => setIsMobileMenuOpen(false)}
                   className="relative text-neutral-600 dark:text-neutral-300 py-2 block w-full"
                 >
                   <span>{item.name}</span>
-                </a>
+                </Link>
               )
             )}
 

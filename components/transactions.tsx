@@ -109,13 +109,13 @@ export default function Transactions({ group }: { group: Group }) {
                       </div>
                       <DialogFooter className="mt-8">
                         <DialogClose asChild>
-                          <Button variant="outline" className="w-1/2">
+                          <Button variant="outline" className="sm:w-1/2 w-full">
                             Cancel
                           </Button>
                         </DialogClose>
                         <Button
                           type="submit"
-                          className="bg-yellow-600 hover:bg-yellow-700 text-white w-1/2"
+                          className="bg-yellow-600 hover:bg-yellow-700 text-white sm:w-1/2 w-full"
                           onClick={() => handleRemoveTransaction(exp.id)}
                         >
                           Yes
