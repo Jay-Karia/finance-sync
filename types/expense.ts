@@ -6,10 +6,10 @@ export type Transaction = {
   date?: string; // ISO string
   paidBy: string[]; // who fronted the cash
   paidAmounts?: number[]; // amounts paid by each participant, if different
+  splitAmounts?: number[]; // exact amounts owed by each participant when splitType is 'amount'
   participants: string[]; // same as splitBetween
   splitType: "equally" | "percentage" | "amount";
   expenseType: "expense" | "given" | "received";
-  splitAmounts: number[],
-  splitPercentages: number[]; // percentages for each participant, if splitType is "percentage"
+  splitPercentages?: number[]; // percentages for each participant, if splitType is "percentage"
   notes?: string;
 };
