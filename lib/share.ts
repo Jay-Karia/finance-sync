@@ -17,19 +17,23 @@ export function updateUserShares(
     transaction.expenseType === "expense" &&
     transaction.splitType === "equally"
   ) {
-    const { amount, participants, paidBy } = transaction;
+    const { amount, participants, paidBy, paidAmounts } = transaction;
     const share = amount / participants.length;
-    const payer = paidBy[0]; // assume single payer for simplicity
+
+    // determine how much each payer actually paid, fallback to equal split among payers
+    const payments =
+      paidAmounts && paidAmounts.length === paidBy.length
+        ? paidAmounts
+        : paidBy.map(() => amount / paidBy.length);
 
     participants.forEach((member) => {
-      if (member === payer) {
-        // payer fronted money but also consumed one share,
-        // so net they should receive (amount − share)
-        const net = amount - share;
+      const payIndex = paidBy.indexOf(member);
+      if (payIndex !== -1) {
+        const paid = payments[payIndex] || 0;
+        const net = paid - share;
         updatedGroup.userShares[member] =
           (updatedGroup.userShares[member] || 0) + net;
       } else {
-        // other members owe their share → negative balance
         updatedGroup.userShares[member] =
           (updatedGroup.userShares[member] || 0) - share;
       }
@@ -57,19 +61,23 @@ export function revertUserShares(
     transaction.expenseType === "expense" &&
     transaction.splitType === "equally"
   ) {
-    const { amount, participants, paidBy } = transaction;
+    const { amount, participants, paidBy, paidAmounts } = transaction;
     const share = amount / participants.length;
-    const payer = paidBy[0]; // assume single payer for simplicity
+
+    // determine how much each payer actually paid, fallback to equal split among payers
+    const payments =
+      paidAmounts && paidAmounts.length === paidBy.length
+        ? paidAmounts
+        : paidBy.map(() => amount / paidBy.length);
 
     participants.forEach((member) => {
-      if (member === payer) {
-        // payer fronted money but also consumed one share,
-        // so net they should receive (amount − share)
-        const net = amount - share;
+      const payIndex = paidBy.indexOf(member);
+      if (payIndex !== -1) {
+        const paid = payments[payIndex] || 0;
+        const net = paid - share;
         updatedGroup.userShares[member] =
           (updatedGroup.userShares[member] || 0) - net;
       } else {
-        // other members owe their share → negative balance
         updatedGroup.userShares[member] =
           (updatedGroup.userShares[member] || 0) + share;
       }
