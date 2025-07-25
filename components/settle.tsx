@@ -45,7 +45,7 @@ export default function Settle({ group }: { group: Group }) {
                     <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center">
                       <div className="mb-4 sm:mb-0">
                         <p className="text-gray-800 dark:text-gray-200 font-medium">
-                          {settlement.paidBy} --&gt; {settlement.paidTo}
+                          {settlement.from} --&gt; {settlement.to}
                         </p>
                         <p className="text-lg font-semibold text-green-600 dark:text-green-400">
                           {settlement.amount.toFixed(2)}
@@ -75,7 +75,7 @@ export default function Settle({ group }: { group: Group }) {
                     <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center">
                       <div className="mb-4 sm:mb-0">
                         <p className="text-gray-600 dark:text-gray-400 font-medium">
-                          {settlement.paidBy} --&gt; {settlement.paidTo}
+                          {settlement.from} --&gt; {settlement.to}
                         </p>
                         <p className="text-lg font-semibold text-gray-500 dark:text-gray-500">
                           {settlement.amount.toFixed(2)}
