@@ -11,5 +11,4 @@ export type Transaction = {
   splitType: "equally" | "percentage" | "amount";
   expenseType: "expense" | "given" | "received";
   splitPercentages?: number[]; // percentages for each participant, if splitType is "percentage"
-  notes?: string;
 };

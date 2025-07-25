@@ -55,7 +55,6 @@ export default function MoneyReceived({ group }: { group: Group }) {
         paidBy: [values.receivedFrom],
         participants: [values.receivedBy],
         splitType: "equally",
-        notes: "",
         expenseType: "received",
       };
 
@@ -213,7 +212,7 @@ export default function MoneyReceived({ group }: { group: Group }) {
 
           <div className="flex flex-col sm:flex-row gap-4 pt-6 mt-4 border-t border-gray-100 dark:border-gray-700">
             <Button
-              className="w-1/2 bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-600"
+              className="sm:w-1/2 w-full bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-600"
               asChild
             >
               <Link href={`/groups/${group.id}`}>Back</Link>

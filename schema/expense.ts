@@ -15,7 +15,6 @@ export const expenseSchema = z.object({
     .array(z.string())
     .min(1, { message: "At least one split participant is required" }),
   splitType: z.enum(["equally", "percentage", "amount"]),
-  notes: z.string().optional(),
   payAmount: z.array(z.number()),
 });
 
