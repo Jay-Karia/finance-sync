@@ -10,7 +10,7 @@ export default function Settle({ group }: { group: Group }) {
   const setGroups = useSetAtom(groupsAtom);
 
   function updateSettlement(settlement: SettleType, settled = true) {
-    // Update the group's settlements by removing the settled transaction
+    // Update the group's settlements by updating settled status
     const updatedGroup = {
       ...group,
       settlements: group.settlements.map((s) => {
@@ -21,9 +21,35 @@ export default function Settle({ group }: { group: Group }) {
       }),
     };
 
+    // Update the user shares based on the settlement
+    const userShares = { ...updatedGroup.userShares };
+    if (settled) {
+      // If settling, adjust the shares accordingly
+      userShares[settlement.from] =
+        (userShares[settlement.from] || 0) + settlement.amount;
+      userShares[settlement.to] =
+        (userShares[settlement.to] || 0) - settlement.amount;
+    } else {
+      // If reverting, reverse the adjustment
+      userShares[settlement.from] =
+        (userShares[settlement.from] || 0) - settlement.amount;
+      userShares[settlement.to] =
+        (userShares[settlement.to] || 0) + settlement.amount;
+    }
+
+    // Update the group's user shares
+    const updatedUserShares = {
+      ...updatedGroup.userShares,
+      ...userShares,
+    };
+    const updatedGroupWithShares = {
+      ...updatedGroup,
+      userShares: updatedUserShares,
+    };
+
     // Update the global state with the modified group
     setGroups((prevGroups) =>
-      prevGroups.map((g) => (g.id === group.id ? updatedGroup : g))
+      prevGroups.map((g) => (g.id === group.id ? updatedGroupWithShares : g))
     );
   }
 
