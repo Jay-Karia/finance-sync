@@ -9,7 +9,11 @@ import Summary from "@/components/summary";
 import Transactions from "@/components/transactions";
 import Settle from "@/components/settle";
 
-export default function GroupPage({ params }: {params: Promise<{ id: string }>;}) {
+export default function GroupPage({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
   const { id } = use(params);
   const groups = useAtomValue(groupsAtom);
   const [group, setGroup] = useState<Group | null>(null);
@@ -40,17 +44,10 @@ export default function GroupPage({ params }: {params: Promise<{ id: string }>;}
 
   return (
     <div className="dark:bg-gray-900 h-max">
-      {/* Group Header */}
       <GroupHeader group={group} />
-
-      {/* Summary */}
       <Summary group={group} />
-
-      {/* Transactions List */}
       <Transactions group={group} />
-
-      {/* Settle Up */}
-      <Settle group={group}/>
+      <Settle group={group} />
     </div>
   );
 }

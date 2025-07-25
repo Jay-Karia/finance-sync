@@ -8,7 +8,7 @@ import { ERROR_TOAST_STYLE, SUCCESS_TOAST_STYLE } from "@/constants";
 import EditGroup from "../edit-group";
 import DeleteGroup from "../delete-group";
 import Link from "next/link";
-import {Separator} from "../ui/separator";
+import { Separator } from "../ui/separator";
 
 interface GroupHeaderProps {
   group: Group;
@@ -19,12 +19,21 @@ export default function GroupHeader({ group }: GroupHeaderProps) {
 
   function handleRemoveMember(index: number) {
     try {
+      const removedMember = group.members[index];
+      // Update members array
       group.members.splice(index, 1);
+
+      // Update userShares keys
+      const userSharesCopy = { ...group.userShares };
+      delete userSharesCopy[removedMember];
+      group.userShares = userSharesCopy;
 
       // Update the state
       setGroups((prevGroups) =>
         prevGroups.map((g) =>
-          g.id === group.id ? { ...g, members: [...group.members] } : g
+          g.id === group.id
+            ? { ...g, members: [...group.members], userShares: userSharesCopy }
+            : g
         )
       );
 
@@ -44,10 +53,17 @@ export default function GroupHeader({ group }: GroupHeaderProps) {
       toast.error("Member already exists in the group", ERROR_TOAST_STYLE);
       return;
     }
-    group.members.push(member.trim());
+    const trimmed = member.trim();
+    // Update members and userShares
+    const updatedMembers = [...group.members, trimmed];
+    const updatedUserShares = { ...group.userShares, [trimmed]: 0 };
+    group.members = updatedMembers;
+    group.userShares = updatedUserShares;
     setGroups((prevGroups) =>
       prevGroups.map((g) =>
-        g.id === group.id ? { ...g, members: [...group.members] } : g
+        g.id === group.id
+          ? { ...g, members: updatedMembers, userShares: updatedUserShares }
+          : g
       )
     );
     toast.success("Member added successfully", SUCCESS_TOAST_STYLE);
