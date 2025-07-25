@@ -4,23 +4,14 @@ import { SettleType } from "@/types/settle";
 export default function updateSettlements(group: Group): SettleType[] {
   const useShares = group.userShares;
 
-  const unsettled = group.settlements.filter(
-    (settlement) => !settlement.settled
-  );
-  const settled = group.settlements.filter((settlement) => settlement.settled);
+  // preserve only already settled entries
+  const preserved = group.settlements.filter((s) => s.settled);
 
   // Calculate net balances for each user
   const netBalances: { [userId: string]: number } = {};
+  // start from current share balances
   Object.keys(useShares).forEach((userId) => {
     netBalances[userId] = useShares[userId];
-  });
-
-  // Apply existing unsettled settlements to balances
-  unsettled.forEach((settlement) => {
-    netBalances[settlement.from] =
-      (netBalances[settlement.from] || 0) - settlement.amount;
-    netBalances[settlement.to] =
-      (netBalances[settlement.to] || 0) + settlement.amount;
   });
 
   // Generate new settlements to minimize transactions
@@ -60,9 +51,8 @@ export default function updateSettlements(group: Group): SettleType[] {
     if (creditors[j][1] === 0) j++;
   }
 
-  // Return only settled settlements plus new settlements (remove old unsettled ones)
-  const allSettlements = [...settled, ...newSettlements];
-  return allSettlements.map((settlement) => ({
+  // Return preserved settled entries plus new unsettled ones
+  return [...preserved, ...newSettlements].map((settlement) => ({
     ...settlement,
     groupId: group.id,
   }));

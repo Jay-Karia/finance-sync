@@ -14,8 +14,8 @@ import { FaTriangleExclamation } from "react-icons/fa6";
 import { useSetAtom } from "jotai";
 import { groupsAtom } from "@/atoms";
 import { ERROR_TOAST_STYLE, SUCCESS_TOAST_STYLE } from "@/constants";
-import {toast} from "sonner";
-import {revertUserShares} from "@/lib/share";
+import { toast } from "sonner";
+import { revertUserShares } from "@/lib/share";
 
 export default function Transactions({ group }: { group: Group }) {
   const setGroups = useSetAtom(groupsAtom);
@@ -90,7 +90,10 @@ export default function Transactions({ group }: { group: Group }) {
                         <CiUndo className="text-xl" />
                       </Button>
                     </DialogTrigger>
-                    <DialogContent className="sm:max-w-[425px]">
+                    <DialogContent
+                      className="sm:max-w-[425px]"
+                      aria-description="Remove Transaction"
+                    >
                       <DialogHeader>
                         <div className="flex flex-col items-center gap-2">
                           <div className="w-12 h-12 bg-yellow-100 dark:bg-yellow-900/20 rounded-full flex items-center justify-center">
