@@ -1,9 +1,26 @@
 import { Group } from "@/types/group";
 import { SettleType } from "@/types/settle";
 import { Button } from "./ui/button";
+import { useSetAtom } from "jotai";
+import { groupsAtom } from "@/atoms";
 
 export default function Settle({ group }: { group: Group }) {
-  function handleMarkAsSettled(settlement: SettleType) {}
+  const setGroups = useSetAtom(groupsAtom);
+
+  function handleMarkAsSettled(settlement: SettleType) {
+    // Update the group's settlements by removing the settled transaction
+    const updatedGroup = {
+      ...group,
+      settlements: group.settlements.filter(
+        (s) => s.id !== settlement.id
+      ),
+    };
+
+    // Update the global state with the modified group
+    setGroups((prevGroups) =>
+      prevGroups.map((g) => (g.id === group.id ? updatedGroup : g))
+    );
+  }
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-8 space-y-2">
