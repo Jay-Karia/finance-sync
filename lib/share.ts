@@ -26,17 +26,17 @@ export function updateUserShares(
         ? paidAmounts
         : paidBy.map(() => amount / paidBy.length);
 
+    // First, add what each payer paid
+    paidBy.forEach((payer, idx) => {
+      const paid = payments[idx] || 0;
+      updatedGroup.userShares[payer] =
+        (updatedGroup.userShares[payer] || 0) + paid;
+    });
+
+    // Then, subtract what each participant owes
     participants.forEach((member) => {
-      const payIndex = paidBy.indexOf(member);
-      if (payIndex !== -1) {
-        const paid = payments[payIndex] || 0;
-        const net = paid - share;
-        updatedGroup.userShares[member] =
-          (updatedGroup.userShares[member] || 0) + net;
-      } else {
-        updatedGroup.userShares[member] =
-          (updatedGroup.userShares[member] || 0) - share;
-      }
+      updatedGroup.userShares[member] =
+        (updatedGroup.userShares[member] || 0) - share;
     });
   }
 
