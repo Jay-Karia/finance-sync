@@ -9,6 +9,6 @@ export type Transaction = {
   splitAmounts?: number[]; // exact amounts owed by each participant when splitType is 'amount'
   participants: string[]; // same as splitBetween
   splitType: "equally" | "percentage" | "amount";
-  expenseType: "expense" | "given" | "received";
+  expenseType: "expense" | "given";
   splitPercentages?: number[]; // percentages for each participant, if splitType is "percentage"
 };

@@ -7,7 +7,6 @@ import { useState, useEffect, use } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Expense from "@/components/layouts/expense";
 import MoneyGiven from "@/components/layouts/money-given";
-import MoneyReceived from "@/components/layouts/money-received";
 
 export default function AddExpensePage({
   params,
@@ -49,16 +48,12 @@ export default function AddExpensePage({
         <TabsList className="w-full">
           <TabsTrigger value="expense">Expense</TabsTrigger>
           <TabsTrigger value="given">Money Given</TabsTrigger>
-          <TabsTrigger value="received">Money Received</TabsTrigger>
         </TabsList>
         <TabsContent value="expense">
           <Expense group={group} />
         </TabsContent>
         <TabsContent value="given">
           <MoneyGiven group={group} />
-        </TabsContent>
-        <TabsContent value="received">
-          <MoneyReceived group={group} />
         </TabsContent>
       </Tabs>
     </div>
