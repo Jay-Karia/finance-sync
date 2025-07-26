@@ -274,31 +274,50 @@ export default function Expense({ group }: { group: Group }) {
                   Split Between <span className="text-red-500">*</span>
                 </FormLabel>
                 <FormControl>
-                  <div className="space-y-2 flex flex-col sm:flex-row sm:flex-wrap sm:gap-4 gap-1">
-                    {group.members?.map((member) => (
-                      <label
-                        key={member}
-                        className="flex items-center space-x-2 w-max h-max"
-                      >
-                        <Checkbox
-                          checked={field.value.includes(member)}
-                          onCheckedChange={(checked) => {
-                            if (checked) {
-                              field.onChange([...field.value, member]);
-                            } else {
-                              field.onChange(
-                                field.value.filter((m) => m !== member)
-                              );
-                            }
-                          }}
-                          className="rounded border-gray-300 dark:border-gray-600"
-                        />
-                        <span className="text-gray-700 dark:text-gray-300">
-                          {member}
-                        </span>
-                      </label>
-                    ))}
-                  </div>
+                  <>
+                    {/* Select All Checkbox */}
+                    <label className="flex items-center space-x-2 mb-2">
+                      <Checkbox
+                        checked={field.value.length === group.members?.length}
+                        onCheckedChange={(checked) => {
+                          if (checked) {
+                            field.onChange(group.members || []);
+                          } else {
+                            field.onChange([]);
+                          }
+                        }}
+                        className="rounded border-gray-300 dark:border-gray-600"
+                      />
+                      <span className="text-gray-700 dark:text-gray-300">
+                        All
+                      </span>
+                    </label>
+                    <div className="space-y-2 flex flex-col sm:flex-row sm:flex-wrap sm:gap-4 gap-1">
+                      {group.members?.map((member) => (
+                        <label
+                          key={member}
+                          className="flex items-center space-x-2 w-max h-max"
+                        >
+                          <Checkbox
+                            checked={field.value.includes(member)}
+                            onCheckedChange={(checked) => {
+                              if (checked) {
+                                field.onChange([...field.value, member]);
+                              } else {
+                                field.onChange(
+                                  field.value.filter((m) => m !== member)
+                                );
+                              }
+                            }}
+                            className="rounded border-gray-300 dark:border-gray-600"
+                          />
+                          <span className="text-gray-700 dark:text-gray-300">
+                            {member}
+                          </span>
+                        </label>
+                      ))}
+                    </div>
+                  </>
                 </FormControl>
                 <FormMessage />
               </FormItem>
