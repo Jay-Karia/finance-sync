@@ -30,6 +30,7 @@ import { Transaction } from "@/types/expense";
 import { toast } from "sonner";
 import { ERROR_TOAST_STYLE, SUCCESS_TOAST_STYLE } from "@/constants";
 import Link from "next/link";
+import { updateUserShares } from "@/lib/share";
 
 export default function MoneyReceived({ group }: { group: Group }) {
   const setGroups = useSetAtom(groupsAtom);
@@ -58,6 +59,8 @@ export default function MoneyReceived({ group }: { group: Group }) {
         expenseType: "received",
       };
 
+      // Update the user shares
+      group = updateUserShares(group, expense);
       // Push the expense to the group array
       group.transactions = [...(group.transactions || []), expense];
       // Update the group

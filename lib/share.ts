@@ -102,6 +102,43 @@ export function updateUserShares(
     });
   }
 
+  // handle money given
+  if (transaction.expenseType === "given") {
+    const { amount, participants, paidBy } = transaction;
+    const share = amount / participants.length;
+
+    // First, add what each payer gave
+    paidBy.forEach((payer) => {
+      updatedGroup.userShares[payer] =
+        (updatedGroup.userShares[payer] || 0) + amount;
+    });
+
+    // Then, subtract what each participant owes
+    participants.forEach((member) => {
+      updatedGroup.userShares[member] =
+        (updatedGroup.userShares[member] || 0) - share;
+    });
+  }
+
+  // handle monet received
+  if (transaction.expenseType === "received") {
+    console.log("here")
+    const { amount, participants, paidBy } = transaction;
+    const share = amount / participants.length;
+
+    // First, subtract what each payer received
+    paidBy.forEach((payer) => {
+      updatedGroup.userShares[payer] =
+        (updatedGroup.userShares[payer] || 0) + amount;
+    });
+
+    // Then, add what each participant owes
+    participants.forEach((member) => {
+      updatedGroup.userShares[member] =
+        (updatedGroup.userShares[member] || 0) - share;
+    });
+  }
+
   // update settlements
   updatedGroup.settlements = updateSettlements(updatedGroup);
 
@@ -205,6 +242,42 @@ export function revertUserShares(
       const owed = (splitPercentages[idx] / 100) * amount;
       updatedGroup.userShares[member] =
         (updatedGroup.userShares[member] || 0) + owed;
+    });
+  }
+
+  // handle money given in revert
+  if (transaction.expenseType === "given") {
+    const { amount, participants, paidBy } = transaction;
+    const share = amount / participants.length;
+
+    // First, subtract what each payer gave
+    paidBy.forEach((payer) => {
+      updatedGroup.userShares[payer] =
+        (updatedGroup.userShares[payer] || 0) - amount;
+    });
+
+    // Then, add back what each participant owed
+    participants.forEach((member) => {
+      updatedGroup.userShares[member] =
+        (updatedGroup.userShares[member] || 0) + share;
+    });
+  }
+
+  // handle money received in revert
+  if (transaction.expenseType === "received") {
+    const { amount, participants, paidBy } = transaction;
+    const share = amount / participants.length;
+
+    // First, add back what each payer received
+    paidBy.forEach((payer) => {
+      updatedGroup.userShares[payer] =
+        (updatedGroup.userShares[payer] || 0) - amount;
+    });
+
+    // Then, subtract what each participant owed
+    participants.forEach((member) => {
+      updatedGroup.userShares[member] =
+        (updatedGroup.userShares[member] || 0) + share;
     });
   }
 

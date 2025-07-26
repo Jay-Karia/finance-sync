@@ -31,6 +31,7 @@ import { Transaction } from "@/types/expense";
 import { useSetAtom } from "jotai";
 import { groupsAtom } from "@/atoms";
 import Link from "next/link";
+import { updateUserShares } from "@/lib/share";
 
 export default function MoneyGiven({ group }: { group: Group }) {
   const setGroups = useSetAtom(groupsAtom);
@@ -59,6 +60,8 @@ export default function MoneyGiven({ group }: { group: Group }) {
         expenseType: "given",
       };
 
+      // Update the user shares
+      group = updateUserShares(group, expense);
       // Push the expense to the group array
       group.transactions = [...(group.transactions || []), expense];
       // Update the group
